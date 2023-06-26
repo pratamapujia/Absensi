@@ -49,20 +49,23 @@
     <li class="sidebar-item has-sub">
       <a href="#" class="sidebar-link">
         <i class="bi bi-person-fill"></i>
-        <span>Siswa</span>
+        <span>Kelola Siswa</span>
       </a>
       <ul class="submenu">
         <li class="submenu-item">
-          <a href="<?= site_url('siswa'); ?>" class="submenu-link">Data Seluruh Siswa</a>
+          <a href="<?= site_url('jurusan'); ?>" class="submenu-link">Data Jurusan</a>
         </li>
         <li class="submenu-item">
-          <a href="" class="submenu-link">Data Kelas & Jurusan</a>
+          <a href="<?= site_url('kelas'); ?>" class="submenu-link">Data Kelas</a>
+        </li>
+        <li class="submenu-item">
+          <a href="<?= site_url('siswa'); ?>" class="submenu-link">Data Seluruh Siswa</a>
         </li>
         <li class="submenu-item">
           <a href="" class="submenu-link">Data Siswa per Kelas</a>
         </li>
         <li class="submenu-item">
-          <a href="" class="submenu-link">Data Izin</a>
+          <a href="" class="submenu-link">Data Izin Siswa</a>
         </li>
       </ul>
     </li>

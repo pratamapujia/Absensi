@@ -30,26 +30,16 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>NIS</th>
             <th>Nama</th>
-            <th>Jenis Kelamin</th>
-            <th>Alamat</th>
             <th>Kelas</th>
-            <th>Tanggal Lahir</th>
-            <th>Nomor HP</th>
             <th>Aksi</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td>123456/td>
-            <td>Pratama PUji A</td>
-            <td>Laki-Laki</td>
-            <td>Jl. Tropodo</td>
-            <td>XI</td>
-            <td>20 Agustus 2000</td>
-            <td>081556551</td>
+            <td>10TKJ1</td>
+            <td>X</td>
             <td>
               <span class="badge bg-success">Active</span>
             </td>

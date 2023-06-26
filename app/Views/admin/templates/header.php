@@ -12,8 +12,7 @@ use CodeIgniter\I18n\Time;
 
   <?= $this->renderSection('title'); ?>
 
-  <!-- Jquery -->
-  <script src="<?= base_url(); ?>/assets/extensions/jquery/jquery.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 
   <!-- ICON -->
   <link rel="stylesheet" href="<?= base_url() ?>/assets/extensions/@icon/dripicons/dripicons.css" />
@@ -23,6 +22,9 @@ use CodeIgniter\I18n\Time;
   <!-- Datatable -->
   <link rel="stylesheet" href="<?= base_url() ?>/assets/extensions/simple-datatables/style.css" />
   <link rel="stylesheet" href="<?= base_url() ?>/assets/compiled/css/table-datatable.css" />
+
+  <!-- Sweet Alert 2 -->
+  <link rel="stylesheet" href="assets/extensions/sweetalert2/sweetalert2.min.css" />
 
   <link rel="shortcut icon" href="<?= base_url() ?>/assets/compiled/svg/favicon.svg" type="image/x-icon" />
   <link rel="stylesheet" href="<?= base_url() ?>/assets/compiled/css/app.css" />
@@ -158,6 +160,9 @@ use CodeIgniter\I18n\Time;
           currentTime(); /* calling currentTime() function to initiate the process */
         }
       </script>
+
+      <!-- Jquery -->
+      <script src="<?= base_url(); ?>/assets/extensions/jquery/jquery.min.js"></script>
 
       <!-- Footer -->
       <?= $this->include('admin/templates/footer'); ?>

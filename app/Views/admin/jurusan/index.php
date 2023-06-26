@@ -1,0 +1,142 @@
+<?= $this->extend('admin/templates/header'); ?>
+<?= $this->section('title'); ?>
+<title>Data Jurusan</title>
+<?= $this->endSection(); ?>
+
+<?= $this->section('main'); ?>
+
+<div class="page-heading">
+  <div class="page-title">
+    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="<?= site_url('/'); ?>">Beranda</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Data Jurusan
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
+<!-- End Alert -->
+
+<section class="section">
+  <div class="card">
+    <div class="card-header d-flex align-items-center">
+      <h5 class="card-title">Data Jurusan</h5>
+      <button type="button" class="btn btn-primary rounded-pill icon icon-left ms-auto" data-bs-toggle="modal" data-bs-target="#modalForm"><i class="fas fa-plus"></i> Tambah</button>
+    </div>
+
+    <!-- Modal Form Start -->
+    <div class="modal fade text-left modal-borderless" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <?php $errors = session()->getFlashdata('errors') ?>
+          <div class="modal-header">
+            <h4 class="modal-title" id="formModal">
+              Tambah Jurusan
+            </h4>
+          </div>
+          <?php $validation = \Config\Services::validation(); ?>
+          <form action="<?= site_url('jurusan'); ?>" class="form" method="post" autocomplete="off">
+            <?= csrf_field(); ?>
+            <!-- <input type="hidden" name="form" value="tambah_jurusan"> -->
+            <div class="modal-body">
+              <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
+              <div class="form-group">
+                <input type="text" id="nama_jurusan" class="form-control <?= $validation->hasError('nama_jurusan') ? 'is-invalid' : null ?>" name="nama_jurusan" value="<?= old('nama_jurusan'); ?>">
+                <div class="invalid-feedback">
+                  <?= $validation->getError('nama_jurusan'); ?>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                <i class="bx bx-x d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Close</span>
+              </button>
+              <button type="submit" class="btn btn-primary ms-1">
+                <i class="bx bx-check d-block d-sm-none"></i>
+                <span class="d-none d-sm-block">Simpan</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Form End -->
+
+    <div class="card-body">
+      <table class="table table-striped" id="table1">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Nama Jurusan</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($jurusan as $key => $value) : ?>
+            <tr>
+              <td><?= $key + 1; ?></td>
+              <td><?= $value->nama_jurusan; ?></td>
+              <td>
+                <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $value->id_jurusan ?>" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
+                <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" method="POST" class="d-inline">
+                  <?= csrf_field(); ?>
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                </form>
+              </td>
+            </tr>
+            <!-- Modal Edit Form Start -->
+            <div class="modal fade text-left modal-borderless" id="modalEdit<?= $value->id_jurusan ?>" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title" id="formModal">
+                      Edit Jurusan
+                    </h4>
+                  </div>
+                  <!-- </?php $validation = \Config\Services::validation(); ?> -->
+                  <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" class="form" method="post" autocomplete="off">
+                    <?= csrf_field(); ?>
+                    <!-- <input type="hidden" name="form" value="edit_jurusan"> -->
+                    <input type="hidden" name="_method" value="PATCH">
+                    <div class="modal-body">
+                      <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
+                      <div class="form-group">
+                        <input type="text" id="nama_jurusan" class="form-control <?= $validation->hasError('nama_jurusan') ? 'is-invalid' : null ?>" name="nama_jurusan" value="<?= old('nama_jurusan', $value->nama_jurusan); ?>">
+                        <div class="invalid-feedback">
+                          <?= $validation->getError('nama_jurusan'); ?>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                        <i class="bx bx-x d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Close</span>
+                      </button>
+                      <button type="submit" class="btn btn-primary ms-1">
+                        <i class="bx bx-check d-block d-sm-none"></i>
+                        <span class="d-none d-sm-block">Simpan</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- Modal Edit Form End -->
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+</div>
+
+<?= $this->endSection(); ?>
