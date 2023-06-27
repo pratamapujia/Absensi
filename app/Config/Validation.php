@@ -41,4 +41,13 @@ class Validation extends BaseConfig
     // --------------------------------------------------------------------
     // Rules
     // --------------------------------------------------------------------
+
+    public $jurusan = [
+        'nama_jurusan' => [
+            'rules' => 'required',
+            'errors' => [
+                'required' => 'Nama jurusan harus diisi',
+            ],
+        ],
+    ];
 }

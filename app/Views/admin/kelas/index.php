@@ -41,7 +41,6 @@
               Tambah Kelas
             </h4>
           </div>
-          <?php $validation = \Config\Services::validation(); ?>
           <form action="<?= site_url('kelas'); ?>" class="form" method="post" autocomplete="off">
             <?= csrf_field(); ?>
             <div class="modal-body">
@@ -115,7 +114,6 @@
                       Edit Kelas
                     </h4>
                   </div>
-                  <?php $validation = \Config\Services::validation(); ?>
                   <form action="<?= site_url('kelas/' . $value->id_kelas); ?>" class="form" method="post" autocomplete="off">
                     <?= csrf_field(); ?>
                     <input type="hidden" name="_method" value="PATCH">

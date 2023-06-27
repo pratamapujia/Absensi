@@ -19,7 +19,10 @@ class Kelas extends ResourceController
      */
     public function index()
     {
-        $data['kelas'] = $this->kelas->findAll();
+        $data = [
+            'kelas' => $this->kelas->findAll(),
+            'validation' => \Config\Services::validation(),
+        ];
         return view('admin/kelas/index',$data);
     }
 
