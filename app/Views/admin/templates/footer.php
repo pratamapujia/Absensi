@@ -30,7 +30,3 @@
 
 <!-- My Js -->
 <script src="<?= base_url(); ?>/assets/static/js/my.js"></script>
-
-<!-- Datatable -->
-<script src="<?= base_url() ?>/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
-<script src="<?= base_url() ?>/assets/static/js/pages/simple-datatables.js"></script>

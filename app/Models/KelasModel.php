@@ -9,7 +9,7 @@ class KelasModel extends Model
     protected $table            = 'kelas';
     protected $primaryKey       = 'id_kelas';
     protected $returnType       = 'object';
-    protected $allowedFields    = ['nama_kelas','kelas'];
+    protected $allowedFields    = ['nama_kelas','kode_kelas'];
 
     // Dates
     protected $useTimestamps = false;

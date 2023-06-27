@@ -2,10 +2,16 @@
 
 namespace App\Controllers;
 
+use App\Models\KelasModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Kelas extends ResourceController
 {
+    function __construct()
+    {
+        $this->kelas = new KelasModel();
+    }
+
     /**
      * Return an array of resource objects, themselves in array format
      *
@@ -13,7 +19,8 @@ class Kelas extends ResourceController
      */
     public function index()
     {
-        return view('admin/kelas/index');
+        $data['kelas'] = $this->kelas->findAll();
+        return view('admin/kelas/index',$data);
     }
 
     /**
@@ -43,7 +50,28 @@ class Kelas extends ResourceController
      */
     public function create()
     {
-        //
+        // Validasi
+        $validate = $this->validate([
+            'nama_kelas'       => [
+                'rules'     => 'required|min_length[3]',
+                'errors'    => [
+                    'required' => 'Nama kelas tidak boleh kosong!',
+                    'min_length' => 'Nama kelas minimal 3 karakter',
+                ],
+            ],
+            'kode_kelas'       => [
+                'rules'     => 'required',
+                'errors'    => [
+                    'required' => 'Kelas tidak boleh kosong!',
+                ],
+            ],
+        ]);
+        if (!$validate) {
+            return redirect()->back()->withInput();
+        }
+        $data = $this->request->getPost();
+        $this->kelas->insert($data);
+        return redirect()->to(site_url('kelas'))->with('pesan', 'Data berhasil disimpan 👍');
     }
 
     /**
@@ -63,7 +91,30 @@ class Kelas extends ResourceController
      */
     public function update($id = null)
     {
-        //
+        // Validasi
+        $validate = $this->validate([
+            'nama_kelas'       => [
+                'rules'     => 'required|min_length[3]',
+                'errors'    => [
+                    'required' => 'Nama kelas tidak boleh kosong!',
+                    'min_length' => 'Nama kelas minimal 3 karakter',
+                ],
+            ],
+            'kode_kelas'       => [
+                'rules'     => 'required',
+                'errors'    => [
+                    'required' => 'Kelas tidak boleh kosong!',
+                ],
+            ],
+        ]);
+        if (!$validate) {
+            return redirect()->back()->withInput();
+        }
+
+        // Update data
+        $data = $this->request->getPost();
+        $this->kelas->update($id, $data);
+        return redirect()->to(site_url('kelas'))->with('pesan', 'Data Berhasil Diperbarui 👌');
     }
 
     /**
@@ -73,6 +124,7 @@ class Kelas extends ResourceController
      */
     public function delete($id = null)
     {
-        //
+        $this->kelas->delete($id);
+        return redirect()->to(site_url('kelas'))->with('pesan','Data berhasil dihapus 😭');
     }
 }

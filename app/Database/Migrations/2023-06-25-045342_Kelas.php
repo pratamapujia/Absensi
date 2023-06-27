@@ -19,9 +19,9 @@ class Kelas extends Migration
                 'type'           => 'VARCHAR',
                 'constraint'     => 50,
             ],
-            'kelas'        => [
+            'kode_kelas'        => [
                 'type'           => 'INT',
-                'constraint'     => 3,
+                'constraint'     => 11,
             ],
             'created_at'         => [
                 'type'           => 'DATETIME',

@@ -7,10 +7,10 @@
 
 <div class="page-heading">
   <div class="page-title">
-    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+    <nav aria-label="breadcrumb" class="breadcrumb-header float-start">
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="<?= site_url('/'); ?>">Beranda</a>
+          <a href="<?= site_url('admin'); ?>">Beranda</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">
           Data Siswa
@@ -61,5 +61,10 @@
 </section>
 </div>
 
+<!-- Script -->
+
+<!-- Datatable -->
+<script src="<?= base_url() ?>/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
+<script src="<?= base_url() ?>/assets/static/js/pages/simple-datatables.js"></script>
 
 <?= $this->endSection(); ?>
