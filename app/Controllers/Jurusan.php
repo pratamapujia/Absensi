@@ -22,7 +22,7 @@ class Jurusan extends ResourceController
     {
         $data = [
             'jurusan' => $this->jurusan->findAll(),
-            // 'validation' => \Config\Services::validation(),
+            'validation' => \Config\Services::validation(),
         ];
         return view('admin/jurusan/index',$data);
     }
@@ -55,38 +55,22 @@ class Jurusan extends ResourceController
     public function create()
     {
         // Validasi
-        $validation = \Config\Services::validation();
-        $validation->setRules([
-            'nama_jurusan' => 'jurusan[nama_jurusan]',
-        ]);
-        $validation->setMessages([
-            'nama_jurusan' => [
-                'required' => 'Nama jurusan harus diisi!'
+        $validate = $this->validate([
+            'nama_jurusan'        => [
+                'rules'         => 'required|min_length[3]',
+                'errors'        => [
+                    'required'      => 'Nama jurusan tidak boleh kosong',
+                    'min_length'    => 'Nama jurusan Minimal 3 karakter',
+                ],
             ],
         ]);
-
-        if (!$validation->withRequest($this->request)->run()) {
-            $message = $validation->getErrors();
-            return $this->response->setStatusCode(400)->setJSON($message);
-        } else {
-            $data = $this->request->getPost();
-            $this->jurusan->insert($data);
-            return $this->response->setStatusCode(200)->setJSON(['pesan' => 'Data berhasil disimpan 👍']);
+        if (!$validate) {
+            return redirect()->back()->withInput();
         }
-
-
-        // $validate = $this->validate([
-        //     'nama_jurusan'       => [
-        //         'rules'     => 'required|min_length[3]',
-        //         'errors'    => [
-        //             'required' => 'Nama Jurusan tidak boleh kosong!',
-        //             'min_length' => 'Nama Jurusan minimal 3 karakter',
-        //         ],
-        //     ],
-        // ]);
-        // if (!$validate) {
-        //     return redirect()->back()->withInput();
-        // }
+        // Insert data
+        $data = $this->request->getPost();
+        $this->jurusan->insert($data);
+        return redirect()->to(site_url('jurusan'))->with('pesan', 'Data berhasil ditambahkan 👍');
 
     }
 

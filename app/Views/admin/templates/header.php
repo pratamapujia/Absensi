@@ -115,9 +115,6 @@ use CodeIgniter\I18n\Time;
       </header>
       <div id="main-content">
 
-        <!-- Jquery -->
-        <script src="<?= base_url(); ?>/assets/extensions/jquery/jquery.min.js"></script>
-
         <!-- Main -->
         <?= $this->renderSection('main'); ?>
         <!-- End Main -->
