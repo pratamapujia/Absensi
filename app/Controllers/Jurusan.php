@@ -10,6 +10,7 @@ class Jurusan extends ResourceController
 
     function __construct()
     {
+        helper(['url','form']);
         $this->jurusan = new JurusanModel();
     }
 
@@ -21,8 +22,9 @@ class Jurusan extends ResourceController
     public function index()
     {
         $data = [
+            'title'=> 'Data Jurusan',
             'jurusan' => $this->jurusan->findAll(),
-            'validation' => \Config\Services::validation(),
+            // 'validation' => \Config\Services::validation(),
         ];
         return view('admin/jurusan/index',$data);
     }
@@ -54,8 +56,9 @@ class Jurusan extends ResourceController
      */
     public function create()
     {
+        helper(['form']);
         // Validasi
-        $validate = $this->validate([
+        $validate = [
             'nama_jurusan'        => [
                 'rules'         => 'required|min_length[3]',
                 'errors'        => [
@@ -63,7 +66,7 @@ class Jurusan extends ResourceController
                     'min_length'    => 'Nama jurusan Minimal 3 karakter',
                 ],
             ],
-        ]);
+        ];
         if (!$validate) {
             return redirect()->back()->withInput();
         }

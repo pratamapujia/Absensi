@@ -20,6 +20,7 @@ class Kelas extends ResourceController
     public function index()
     {
         $data = [
+            'title' => 'Data Kelas',
             'kelas' => $this->kelas->findAll(),
             'validation' => \Config\Services::validation(),
         ];

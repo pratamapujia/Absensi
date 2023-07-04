@@ -1,132 +1,139 @@
-<?= $this->extend('admin/templates/header'); ?>
+<?= $this->extend('admin/templates/index'); ?>
 <?= $this->section('title'); ?>
-<title>Data Jurusan</title>
+<title><?= $title; ?></title>
 <?= $this->endSection(); ?>
 
 <?= $this->section('main'); ?>
 
 <div class="page-heading">
   <div class="page-title">
-    <nav aria-label="breadcrumb" class="breadcrumb-header float-start">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="<?= site_url('admin'); ?>">Beranda</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Data Jurusan
-        </li>
-      </ol>
-    </nav>
-  </div>
-</div>
-
-<!-- Alert -->
-<div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
-<!-- End Alert -->
-
-<section class="section">
-  <div class="card">
-    <div class="card-header d-flex align-items-center">
-      <h5 class="card-title">Data Jurusan</h5>
-      <button type="button" class="btn btn-primary rounded-pill icon icon-left ms-auto" data-bs-toggle="modal" data-bs-target="#modalForm"><i class="fas fa-plus"></i> Tambah</button>
-    </div>
-
-    <!-- Modal Form Start -->
-    <div class="modal fade text-left modal-borderless" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h4 class="modal-title" id="formModal">
-              Tambah Jurusan
-            </h4>
-          </div>
-          <form action="<?= site_url('jurusan'); ?>" id="formTambah" class="form" method="post" autocomplete="off" data-parsley-validate>
-            <?= csrf_field(); ?>
-            <div class="modal-body">
-              <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
-              <div class="form-group">
-                <input type="text" id="nama_jurusan" class="form-control" name="nama_jurusan" value="<?= old('nama_jurusan'); ?>" required data-parsley-required-message="Nama jurusan wajib diisi">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                <i class="bx bx-x d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Close</span>
-              </button>
-              <button type="submit" class="btn btn-primary ms-1">
-                <i class="bx bx-check d-block d-sm-none"></i>
-                <span class="d-none d-sm-block">Simpan</span>
-              </button>
-            </div>
-          </form>
-        </div>
+    <div class="row mb-2">
+      <div class="col-12">
+        <nav aria-label="breadcrumb" class="breadcrumb-header">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="<?= site_url('admin'); ?>">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <?= $title; ?>
+            </li>
+          </ol>
+        </nav>
       </div>
     </div>
-    <!-- Modal Form End -->
+  </div>
 
-    <div class="card-body">
-      <table class="table table-striped" id="table1">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Nama Jurusan</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($jurusan as $key => $value) : ?>
-            <tr>
-              <td><?= $key + 1; ?></td>
-              <td><?= $value->nama_jurusan; ?></td>
-              <td>
-                <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $value->id_jurusan ?>" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
-                <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" method="POST" class="d-inline">
-                  <?= csrf_field(); ?>
-                  <input type="hidden" name="_method" value="DELETE">
-                  <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fas fa-trash"></i></button>
-                </form>
-              </td>
-            </tr>
-            <!-- Modal Edit Form Start -->
-            <div class="modal fade text-left modal-borderless" id="modalEdit<?= $value->id_jurusan ?>" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h4 class="modal-title" id="formModal">
-                      Edit Jurusan
-                    </h4>
-                  </div>
-                  <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" class="form" method="post" autocomplete="off" data-parsley-validate>
-                    <?= csrf_field(); ?>
-                    <input type="hidden" name="_method" value="PATCH">
-                    <div class="modal-body">
-                      <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
-                      <div class="form-group">
-                        <input type="text" id="nama_jurusan" class="form-control" name="nama_jurusan" value="<?= old('nama_jurusan', $value->nama_jurusan); ?>" required data-parsley-required-message="Nama jurusan wajib diisi">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
-                        <i class="bx bx-x d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Close</span>
-                      </button>
-                      <button type="submit" class="btn btn-primary ms-1">
-                        <i class="bx bx-check d-block d-sm-none"></i>
-                        <span class="d-none d-sm-block">Simpan</span>
-                      </button>
-                    </div>
-                  </form>
+  <!-- Alert -->
+  <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
+  <!-- End Alert -->
+
+  <section class="section">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="card-title">Data Jurusan</h5>
+        <button type="button" class="btn btn-primary rounded-pill icon icon-left ms-auto" data-bs-toggle="modal" data-bs-target="#modalForm"><i class="fas fa-plus"></i> Tambah</button>
+      </div>
+
+      <!-- Modal Form Start -->
+      <div class="modal fade text-left modal-borderless" id="modalForm" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="formModal">
+                Tambah Jurusan
+              </h4>
+            </div>
+            <form action="<?= site_url('jurusan'); ?>" id="formTambah" class="form" method="post" autocomplete="off" data-parsley-validate>
+              <?= csrf_field(); ?>
+              <div class="modal-body">
+                <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
+                <div class="form-group">
+                  <input type="text" id="nama_jurusan" class="form-control" name="nama_jurusan" value="<?= old('nama_jurusan'); ?>" required data-parsley-required-message="Nama jurusan wajib diisi">
                 </div>
               </div>
-            </div>
-            <!-- Modal Edit Form End -->
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                  <i class="bx bx-x d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Close</span>
+                </button>
+                <button type="submit" class="btn btn-primary ms-1">
+                  <i class="bx bx-check d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Simpan</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Modal Form End -->
+
+      <div class="card-body">
+        <table class="table table-striped" id="table1">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Jurusan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($jurusan as $key => $value) : ?>
+              <tr>
+                <td><?= $key + 1; ?></td>
+                <td><?= $value->nama_jurusan; ?></td>
+                <td>
+                  <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $value->id_jurusan ?>" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
+                  <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" method="POST" class="d-inline">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+              <!-- Modal Edit Form Start -->
+              <div class="modal fade text-left modal-borderless" id="modalEdit<?= $value->id_jurusan ?>" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title" id="formModal">
+                        Edit Jurusan
+                      </h4>
+                    </div>
+                    <form action="<?= site_url('jurusan/' . $value->id_jurusan); ?>" class="form" method="post" autocomplete="off" data-parsley-validate>
+                      <?= csrf_field(); ?>
+                      <input type="hidden" name="_method" value="PATCH">
+                      <div class="modal-body">
+                        <label for="nama_jurusan">Nama Jurusan <strong class="text-danger">*</strong></label>
+                        <div class="form-group">
+                          <input type="text" id="nama_jurusan" class="form-control" name="nama_jurusan" value="<?= old('nama_jurusan', $value->nama_jurusan); ?>" required data-parsley-required-message="Nama jurusan wajib diisi">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                          <i class="bx bx-x d-block d-sm-none"></i>
+                          <span class="d-none d-sm-block">Close</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ms-1">
+                          <i class="bx bx-check d-block d-sm-none"></i>
+                          <span class="d-none d-sm-block">Simpan</span>
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- Modal Edit Form End -->
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 </div>
+
+<!-- Parsley -->
+<script src="<?= base_url() ?>/assets/extensions/parsleyjs/parsley.min.js"></script>
+<script src="<?= base_url() ?>/assets/static/js/pages/parsley.js"></script>
 
 <!-- Datatable -->
 <script src="<?= base_url() ?>/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>

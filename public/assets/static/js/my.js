@@ -61,3 +61,14 @@ $(document).on("click", ".btn-delete", function () {
     }
   });
 });
+
+// Preview Foto
+function previewImg() {
+  const gambar = document.querySelector("#foto_siswa");
+  const gambarPreview = document.querySelector(".img-preview");
+  const fileGambar = new FileReader();
+  fileGambar.readAsDataURL(gambar.files[0]);
+  fileGambar.onload = function (e) {
+    gambarPreview.src = e.target.result;
+  };
+}

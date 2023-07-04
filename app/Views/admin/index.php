@@ -1,4 +1,4 @@
-<?= $this->extend('admin/templates/header'); ?>
+<?= $this->extend('admin/templates/index'); ?>
 <?= $this->section('title'); ?>
 <title>Beranda</title>
 <?= $this->endSection(); ?>

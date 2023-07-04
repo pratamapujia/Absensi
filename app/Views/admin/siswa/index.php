@@ -1,67 +1,86 @@
-<?= $this->extend('admin/templates/header'); ?>
+<?= $this->extend('admin/templates/index'); ?>
 <?= $this->section('title'); ?>
-<title>Beranda</title>
+<title><?= $title; ?></title>
 <?= $this->endSection(); ?>
 
 <?= $this->section('main'); ?>
 
 <div class="page-heading">
   <div class="page-title">
-    <nav aria-label="breadcrumb" class="breadcrumb-header float-start">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="<?= site_url('admin'); ?>">Beranda</a>
-        </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Data Siswa
-        </li>
-      </ol>
-    </nav>
-  </div>
-</div>
-<section class="section">
-  <div class="card">
-    <div class="card-header d-flex align-items-center">
-      <h5 class="card-title">Data Siswa</h5>
-      <button class="btn btn-primary rounded-pill icon icon-left ms-auto"><i class="fas fa-plus"></i> Tambah</button>
-    </div>
-    <div class="card-body">
-      <table class="table table-striped" id="table1">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>NIS</th>
-            <th>Nama</th>
-            <th>Jenis Kelamin</th>
-            <th>Alamat</th>
-            <th>Kelas</th>
-            <th>Tanggal Lahir</th>
-            <th>Nomor HP</th>
-            <th>Aksi</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>123456/td>
-            <td>Pratama PUji A</td>
-            <td>Laki-Laki</td>
-            <td>Jl. Tropodo</td>
-            <td>XI</td>
-            <td>20 Agustus 2000</td>
-            <td>081556551</td>
-            <td>
-              <span class="badge bg-success">Active</span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="row mb-2">
+      <div class="col-12">
+        <nav aria-label="breadcrumb" class="breadcrumb-header">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+              <a href="<?= site_url('admin'); ?>">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+              <?= $title; ?>
+            </li>
+          </ol>
+        </nav>
+      </div>
     </div>
   </div>
-</section>
-</div>
 
-<!-- Script -->
+  <!-- Alert -->
+  <div class="flash-data" data-flashdata="<?= session()->getFlashdata('pesan'); ?>"></div>
+  <!-- End Alert -->
+
+  <section class="section">
+    <div class="card">
+      <div class="card-header d-flex align-items-center">
+        <h5 class="card-title"><?= $title; ?></h5>
+        <a href="<?= site_url('siswa/new'); ?>" class="btn btn-primary rounded-pill icon icon-left ms-auto"><i class="fas fa-plus"></i> Tambah</a>
+      </div>
+      <div class="card-body">
+        <table class="table table-striped" id="table1">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Foto</th>
+              <th>NIS</th>
+              <th>Nama</th>
+              <th>Jenis Kelamin</th>
+              <th>Tanggal Lahir</th>
+              <th>Alamat</th>
+              <th>Kelas</th>
+              <th>Jurusan</th>
+              <th>Nomor HP</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($siswa as $key => $value) : ?>
+              <tr>
+                <td><?= $key + 1; ?></td>
+                <td>
+                  <img src="<?= base_url(); ?>/assets/img/foto_siswa/<?= $value->foto_siswa; ?>" alt="Foto" class="img-thumbnail" width="100">
+                </td>
+                <td><?= $value->nis; ?></td>
+                <td><?= $value->nama_siswa; ?></td>
+                <td><?= $value->jenis_kelamin; ?></td>
+                <td><?= $value->tgl_lahir; ?></td>
+                <td><?= $value->alamat_siswa; ?></td>
+                <td><?= $value->nama_kelas; ?></td>
+                <td><?= $value->nama_jurusan; ?></td>
+                <td><?= $value->telepone_siswa; ?></td>
+                <td>
+                  <a href="<?= site_url('siswa/' . $value->id_siswa . '/edit'); ?>" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
+                  <form action="<?= site_url('siswa/' . $value->id_siswa); ?>" method="POST" class="d-inline">
+                    <?= csrf_field(); ?>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="button" class="btn btn-danger btn-sm btn-delete" data-bs-toggle="tooltip" data-bs-placement="top" title="Hapus Data"><i class="fas fa-trash"></i></button>
+                  </form>
+                </td>
+              </tr>
+            <?php endforeach ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>
 
 <!-- Datatable -->
 <script src="<?= base_url() ?>/assets/extensions/simple-datatables/umd/simple-datatables.js"></script>
