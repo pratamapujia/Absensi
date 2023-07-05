@@ -9,11 +9,11 @@ class Jurusan extends Seeder
     public function run()
     {
         $data = [
-            ['jurusan' => 'OTKP'],
-            ['jurusan' => 'RPL'],
-            ['jurusan' => 'TBSM'],
-            ['jurusan' => 'TKJ'],
-            ['jurusan' => 'TKR'],
+            ['nama_jurusan' => 'OTKP'],
+            ['nama_jurusan' => 'RPL'],
+            ['nama_jurusan' => 'TBSM'],
+            ['nama_jurusan' => 'TKJ'],
+            ['nama_jurusan' => 'TKR'],
         ];
         $this->db->table('jurusan')->insertBatch($data);
     }

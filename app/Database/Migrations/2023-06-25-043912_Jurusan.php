@@ -15,7 +15,7 @@ class Jurusan extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'jurusan'        => [
+            'nama_jurusan'        => [
                 'type'           => 'VARCHAR',
                 'constraint'     => 100,
             ],

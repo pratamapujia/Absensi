@@ -34,69 +34,110 @@
           </div>
           <div class="card-content">
             <div class="card-body">
-              <form class="form">
+              <form action="<?= site_url('siswa/' . $siswa->id_siswa); ?>" class="form" method="post" autocomplete="off" enctype="multipart/form-data">
                 <div class="row">
+                  <?= csrf_field(); ?>
+                  <input type="hidden" name="_method" value="PATCH">
+                  <input type="hidden" name="foto_lama" value="<?= $siswa->foto_siswa; ?>">
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="nama_siswa">Nama Siswa</label>
-                      <input type="text" id="nama_siswa" class="form-control" name="nama_siswa" />
+                      <label for="nama_siswa">Nama Siswa <strong class="text-danger">*</strong></label>
+                      <input type="text" id="nama_siswa" class="form-control <?= session('errors.nama_siswa') ? 'is-invalid' : null ?>" name="nama_siswa" value="<?= old('nama_siswa', $siswa->nama_siswa); ?>">
+                      <div class="invalid-feedback">
+                        <?= session('errors.nama_siswa') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="nis">NIS</label>
-                      <input type="text" id="nis" class="form-control" name="nis" />
+                      <label for="nis">NIS <strong class="text-danger">*</strong></label>
+                      <input type="text" id="nis" class="form-control <?= session('errors.nis') ? 'is-invalid' : null; ?>" name="nis" value="<?= old('nis', $siswa->nis); ?>" />
+                      <div class="invalid-feedback">
+                        <?= session('errors.nis') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="tgl_lahir">Tanggal Lahir</label>
-                      <input type="date" id="tgl_lahir" class="form-control" name="tgl_lahir" />
+                      <label for="tgl_lahir">Tanggal Lahir <strong class="text-danger">*</strong></label>
+                      <input type="date" id="tgl_lahir" class="form-control <?= session('errors.tgl_lahir') ? 'is-invalid' : null; ?>" name="tgl_lahir" value="<?= old('tgl_lahir', $siswa->tgl_lahir); ?>" />
+                      <div class="invalid-feedback">
+                        <?= session('errors.tgl_lahir') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="jk">Jenis Kelamin</label>
-                      <select name="jk" id="jk" class="form-select">
-                        <option value="L">Laki - Laki</option>
-                        <option value="P">Perempuan</option>
+                      <label for="jenis_kelamin">Jenis Kelamin</label>
+                      <select name="jenis_kelamin" id="jenis_kelamin" class="form-select <?= session('errors.jenis_kelamin') ? 'is-invalid' : null; ?>">
+                        <option value=""> Pilih </option>
+                        <option value="L" <?= old('jenis_kelamin', $siswa->jenis_kelamin) == 'L' ? 'selected' : null; ?>>Laki - Laki</option>
+                        <option value="P" <?= old('jenis_kelamin', $siswa->jenis_kelamin) == 'P' ? 'selected' : null; ?>>Perempuan</option>
                       </select>
+                      <div class="invalid-feedback">
+                        <?= session('errors.jenis_kelamin') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="kode_kelas">Kelas</label>
-                      <select name="kode_kelas" id="kode_kelas" class="form-select">
-                        <option value="">10 OTKP 1</option>
-                        <option value="">10 OTKP 2</option>
+                      <label for="id_kelas">Kelas</label>
+                      <select name="id_kelas" id="id_kelas" class="form-select <?= session('errors.id_kelas') ? 'is-invalid' : null; ?>">
+                        <option value=""> Pilih </option>
+                        <?php foreach ($kelas as $key => $value) : ?>
+                          <option value="<?= $value->id_kelas; ?>" <?= old('id_kelas', $siswa->id_kelas) == $value->id_kelas ? 'selected' : null; ?>><?= $value->nama_kelas; ?></option>
+                        <?php endforeach ?>
                       </select>
+                      <div class="invalid-feedback">
+                        <?= session('errors.id_kelas') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="kode_jurusan">Jurusan</label>
-                      <select name="kode_jurusan" id="kode_jurusan" class="form-select">
-                        <option value="">OTKP</option>
-                        <option value="">TBSM</option>
+                      <label for="id_jurusan">Jurusan</label>
+                      <select name="id_jurusan" id="id_jurusan" class="form-select <?= session('errors.id_jurusan') ? 'is-invalid' : null; ?>">
+                        <option value=""> Pilih </option>
+                        <?php foreach ($jurusan as $key => $value) : ?>
+                          <option value="<?= $value->id_jurusan; ?>" <?= old('id_jurusan', $siswa->id_jurusan) == $value->id_jurusan ? 'selected' : null; ?>><?= $value->nama_jurusan; ?></option>
+                        <?php endforeach ?>
                       </select>
+                      <div class="invalid-feedback">
+                        <?= session('errors.id_jurusan') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="telepon">No Telepon</label>
-                      <input type="text" id="telepon" class="form-control" name="telepon" />
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
-                      <label for="alamat_siswa">Alamat</label>
-                      <input type="text" id="alamat_siswa" class="form-control" name="alamat_siswa" />
+                      <label for="telepone_siswa">No Telepon</label>
+                      <input type="text" id="telepone_siswa" class="form-control <?= session('errors.telepone_siswa') ? 'is-invalid' : null; ?>" name="telepone_siswa" value="<?= old('telepone_siswa', $siswa->telepone_siswa); ?>" />
+                      <div class="invalid-feedback">
+                        <?= session('errors.telepone_siswa') ?>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
                       <label for="foto_siswa">Foto</label>
-                      <input type="file" id="foto_siswa" class="form-control" name="foto_siswa" />
+                      <input type="file" id="foto_siswa" class="form-control <?= session('errors.foto_siswa') ? 'is-invalid' : null; ?>" name="foto_siswa" onchange="previewImg()" />
+                      <div class="invalid-feedback">
+                        <?= session('errors.foto_siswa') ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="alamat_siswa">Alamat</label>
+                      <textarea id="alamat_siswa" name="alamat_siswa" class="form-control <?= session('errors.alamat_siswa') ? 'is-invalid' : null; ?>" rows="4"><?= $siswa->alamat_siswa; ?></textarea>
+                      <div class="invalid-feedback">
+                        <?= session('errors.alamat_siswa') ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label>Preview Foto</label><br>
+                      <img src="<?= base_url(); ?>/assets/img/foto_siswa/<?= $siswa->foto_siswa; ?>" class="img-thumbnail img-preview" alt="Foto Siswa" width="120">
                     </div>
                   </div>
                   <div class="col-12 d-flex justify-content-end">
