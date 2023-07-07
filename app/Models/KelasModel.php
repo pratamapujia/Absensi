@@ -9,8 +9,17 @@ class KelasModel extends Model
     protected $table            = 'kelas';
     protected $primaryKey       = 'id_kelas';
     protected $returnType       = 'object';
-    protected $allowedFields    = ['nama_kelas','kode_kelas'];
+    protected $allowedFields    = ['nama_kelas','kode_kelas','id_jurusan'];
 
     // Dates
     protected $useTimestamps = false;
+
+    // Join tabel
+    function getAll()
+    {
+        $builder = $this->db->table('kelas');
+        $builder->join('jurusan', 'jurusan.id_jurusan = kelas.id_jurusan');
+        $query = $builder->get();
+        return $query->getResult();
+    }
 }

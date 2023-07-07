@@ -54,10 +54,19 @@
                 <label for="kode_kelas">Kelas <strong class="text-danger">*</strong></label>
                 <div class="form-group">
                   <select class="form-select" id="kode_kelas" name="kode_kelas" required data-parsley-required-message="Pilih salah satu!">
-                    <option value="" hidden></option>
+                    <option value=""> Pilih </option>
                     <option value=10 <?= old('kode_kelas') == 10 ? 'selected' : null; ?>>10</option>
                     <option value=11 <?= old('kode_kelas') == 11 ? 'selected' : null; ?>>11</option>
                     <option value=12 <?= old('kode_kelas') == 12 ? 'selected' : null; ?>>12</option>
+                  </select>
+                </div>
+                <label for="id_jurusan">Jurusan <strong class="text-danger">*</strong></label>
+                <div class="form-group">
+                  <select class="form-select" id="id_jurusan" name="id_jurusan" required data-parsley-required-message="Pilih salah satu!">
+                    <option value=""> Pilih </option>
+                    <?php foreach ($jurusan as $key => $value) : ?>
+                      <option value="<?= $value->id_jurusan; ?>" <?= old('id_jurusan') == $value->id_jurusan ? 'selected' : null; ?>><?= $value->nama_jurusan; ?></option>
+                    <?php endforeach ?>
                   </select>
                 </div>
               </div>
@@ -84,6 +93,7 @@
               <th>No</th>
               <th>Nama Kelas</th>
               <th>Kelas</th>
+              <th>Jurusan</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -93,6 +103,7 @@
                 <td><?= $key + 1; ?></td>
                 <td><?= $value->nama_kelas; ?></td>
                 <td><?= $value->kode_kelas; ?></td>
+                <td><?= $value->nama_jurusan; ?></td>
                 <td>
                   <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modalEdit<?= $value->id_kelas ?>" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
                   <form action="<?= site_url('kelas/' . $value->id_kelas); ?>" method="POST" class="d-inline">
@@ -126,6 +137,15 @@
                             <option value=10 <?= old('kode_kelas', $value->kode_kelas) == 10 ? 'selected' : null; ?>>10</option>
                             <option value=11 <?= old('kode_kelas', $value->kode_kelas) == 11 ? 'selected' : null; ?>>11</option>
                             <option value=12 <?= old('kode_kelas', $value->kode_kelas) == 12 ? 'selected' : null; ?>>12</option>
+                          </select>
+                        </div>
+                        <label for="id_jurusan">Jurusan <strong class="text-danger">*</strong></label>
+                        <div class="form-group">
+                          <select class="form-select" id="id_jurusan" name="id_jurusan" required data-parsley-required-message="Pilih salah satu!">
+                            <option value=""> Pilih </option>
+                            <?php foreach ($jurusan as $key => $valJur) : ?>
+                              <option value="<?= $valJur->id_jurusan; ?>" <?= old('id_jurusan', $value->id_jurusan) == $valJur->id_jurusan ? 'selected' : null; ?>><?= $valJur->nama_jurusan; ?></option>
+                            <?php endforeach ?>
                           </select>
                         </div>
                       </div>

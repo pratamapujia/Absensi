@@ -83,20 +83,6 @@
                   </div>
                   <div class="col-md-6 col-12">
                     <div class="form-group">
-                      <label for="id_kelas">Kelas</label>
-                      <select name="id_kelas" id="id_kelas" class="form-select <?= session('errors.id_kelas') ? 'is-invalid' : null; ?>">
-                        <option value=""> Pilih </option>
-                        <?php foreach ($kelas as $key => $value) : ?>
-                          <option value="<?= $value->id_kelas; ?>" <?= old('id_kelas') == $value->id_kelas ? 'selected' : null; ?>><?= $value->nama_kelas; ?></option>
-                        <?php endforeach ?>
-                      </select>
-                      <div class="invalid-feedback">
-                        <?= session('errors.id_kelas') ?>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-6 col-12">
-                    <div class="form-group">
                       <label for="id_jurusan">Jurusan</label>
                       <select name="id_jurusan" id="id_jurusan" class="form-select <?= session('errors.id_jurusan') ? 'is-invalid' : null; ?>">
                         <option value=""> Pilih </option>
@@ -106,6 +92,20 @@
                       </select>
                       <div class="invalid-feedback">
                         <?= session('errors.id_jurusan') ?>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6 col-12">
+                    <div class="form-group">
+                      <label for="id_kelas">Kelas</label>
+                      <select name="id_kelas" id="id_kelas" class="form-select <?= session('errors.id_kelas') ? 'is-invalid' : null; ?>">
+                        <option value=""> Pilih </option>
+                        <?php foreach ($kelas as $key => $value) : ?>
+                          <option value="<?= $value->id_kelas; ?>" <?= old('id_kelas') == $value->id_kelas ? 'selected' : null; ?>><?= $value->nama_kelas; ?></option>
+                        <?php endforeach ?>
+                      </select>
+                      <div class="invalid-feedback">
+                        <?= session('errors.id_kelas') ?>
                       </div>
                     </div>
                   </div>

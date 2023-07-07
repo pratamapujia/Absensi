@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\KelasModel;
+use App\Models\JurusanModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Kelas extends ResourceController
@@ -10,6 +11,7 @@ class Kelas extends ResourceController
     function __construct()
     {
         $this->kelas = new KelasModel();
+        $this->jurusan = new JurusanModel();
     }
 
     /**
@@ -21,7 +23,8 @@ class Kelas extends ResourceController
     {
         $data = [
             'title' => 'Data Kelas',
-            'kelas' => $this->kelas->findAll(),
+            'kelas' => $this->kelas->getAll(),
+            'jurusan' => $this->jurusan->findAll(),
             'validation' => \Config\Services::validation(),
         ];
         return view('admin/kelas/index',$data);

@@ -23,25 +23,20 @@ class Kelas extends Migration
                 'type'           => 'INT',
                 'constraint'     => 11,
             ],
-            'created_at'         => [
-                'type'           => 'DATETIME',
-                'null'           => true,
-            ],
-            'updated_at'         => [
-                'type'           => 'DATETIME',
-                'null'           => true,
-            ],
-            'deleted_at'         => [
-                'type'           => 'DATETIME',
-                'null'           => true,
+            'id_jurusan'        => [
+                'type'           => 'BIGINT',
+                'constraint'     => 20,
+                'unsigned'       => true,
             ],
         ]);
         $this->forge->addKey('id_kelas', true);
+        $this->forge->addForeignKey('id_jurusan', 'jurusan', 'id_jurusan');
         $this->forge->createTable('kelas');
     }
 
     public function down()
     {
+        $this->forge->dropForeignKey('jurusan', 'jurusan_id_jurusan_foreign');
         $this->forge->dropTable('kelas');
     }
 }

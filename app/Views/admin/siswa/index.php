@@ -45,7 +45,6 @@
               <th>Tanggal Lahir</th>
               <th>Alamat</th>
               <th>Kelas</th>
-              <th>Jurusan</th>
               <th>Nomor HP</th>
               <th>Aksi</th>
             </tr>
@@ -55,7 +54,7 @@
               <tr>
                 <td><?= $key + 1; ?></td>
                 <td>
-                  <img src="<?= base_url(); ?>/assets/img/foto_siswa/<?= $value->foto_siswa; ?>" alt="Foto" class="img-thumbnail" width="100">
+                  <img src="<?= base_url(); ?>/assets/static/images/foto_siswa/<?= $value->foto_siswa; ?>" alt="Foto" class="img-thumbnail" width="100">
                 </td>
                 <td><?= $value->nis; ?></td>
                 <td><?= $value->nama_siswa; ?></td>
@@ -63,7 +62,6 @@
                 <td><?= $value->tgl_lahir; ?></td>
                 <td><?= $value->alamat_siswa; ?></td>
                 <td><?= $value->nama_kelas; ?></td>
-                <td><?= $value->nama_jurusan; ?></td>
                 <td><?= $value->telepone_siswa; ?></td>
                 <td>
                   <a href="<?= site_url('siswa/' . $value->id_siswa . '/edit'); ?>" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
