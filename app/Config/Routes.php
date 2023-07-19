@@ -35,6 +35,7 @@ $routes->get('admin', 'Admin::index');
 $routes->resource('siswa');
 $routes->resource('kelas');
 $routes->resource('jurusan');
+$routes->resource('bykelas');
 
 /*
  * --------------------------------------------------------------------

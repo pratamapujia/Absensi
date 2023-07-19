@@ -15,7 +15,7 @@
               <a href="<?= site_url('admin'); ?>">Dashboard</a>
             </li>
             <li class="breadcrumb-item" aria-current="page">
-              <a href="<?= site_url('siswa'); ?>">Edit Siswa</a>
+              <a href="<?= site_url('siswa'); ?>">Data Siswa</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
               <?= $title; ?>
@@ -29,8 +29,9 @@
     <div class="row match-height">
       <div class="col-12">
         <div class="card">
-          <div class="card-header">
+          <div class="card-header d-flex align-items-center">
             <h4 class="card-title"><?= $title; ?></h4>
+            <a href="<?= site_url('siswa'); ?>" class="btn btn-secondary rounded-pill icon icon-left ms-auto"><i class="fas fa-arrow-left"></i> Kembali</a>
           </div>
           <div class="card-content">
             <div class="card-body">

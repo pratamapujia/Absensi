@@ -9,7 +9,7 @@
   <section class="section">
     <div class="row">
       <div class="col-12 col-md-3">
-        <div class="card" style="height: 270px;">
+        <div class="card shadow-sm" style="height: 270px;">
           <div class="card-header">
             <h4 class="card-title">
               <span class="fs-3"><i class="bi bi-alarm"></i></span>
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="col-12 col-md-9">
-        <div class="card" style="height: 270px;">
+        <div class="card shadow-sm" style="height: 270px;">
           <div class="card-header">
             <h4 class="card-title">About Vertical Navbar</h4>
           </div>
@@ -38,7 +38,7 @@
     </div>
     <div class="row">
       <div class="col-12 col-md-4">
-        <div class="card" style="height: 190px;">
+        <div class="card shadow-sm" style="height: 190px;">
           <div class="card-body py-4 px-4">
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl bg-primary">
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="card" style="height: 190px;">
+        <div class="card shadow-sm" style="height: 190px;">
           <div class="card-body py-4 px-4">
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl bg-info">
@@ -80,7 +80,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="card" style="height: 190px;">
+        <div class="card shadow-sm" style="height: 190px;">
           <div class="card-body py-4 px-4">
             <div class="d-flex align-items-center">
               <div class="avatar avatar-xl bg-danger">

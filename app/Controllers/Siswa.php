@@ -279,7 +279,7 @@ class Siswa extends ResourceController
             $namaFoto = 'fs_' . bin2hex(random_bytes(3)) . '_' . date('d-m-Y') . '.jpg';
             // Memindahkan foto ke folder
             $fileFoto->move('assets/static/images/foto_siswa',$namaFoto);
-            unlink('assets/img/foto_siswa/'.$this->request->getPost('foto_lama'));
+            unlink('assets/static/images/foto_siswa/'.$this->request->getPost('foto_lama'));
         }
 
 
@@ -307,7 +307,7 @@ class Siswa extends ResourceController
     public function delete($id = null)
     {
         $img = $this->siswa->find($id);
-        unlink('assets/img/foto_siswa/' . $img->foto_siswa);
+        unlink('assets/static/images/foto_siswa/' . $img->foto_siswa);
         // Hapus Permanen
         $this->siswa->delete($id);
         return redirect()->to(site_url('siswa'))->with('pesan', 'Data berhasil dihapus 😭');

@@ -22,4 +22,27 @@ class KelasModel extends Model
         $query = $builder->get();
         return $query->getResult();
     }
+
+    function JumlahSiswaPerKelas($id_kelas)
+    {
+        // $builder = $this->db->table('siswa');
+        // $builder->select('kelas.nama_kelas, COUNT(siswa.id_siswa) as jumlah_siswa');
+        // $builder->join('kelas', 'kelas.id_kelas = siswa.id_kelas');
+        // $builder->groupBy('siswa.id_kelas');
+        // $query = $builder->get();
+        // return $query->getResult();
+
+        return $this->db->table('siswa')->where('id_kelas', $id_kelas)->countAllResults();
+    }
+
+    function getSiswaByKelas($id_kelas)
+    {
+        $builder = $this->db->table('siswa');
+        $builder->select('*');
+        $builder->join('kelas', 'kelas.id_kelas = siswa.id_kelas');
+        $builder->where('siswa.id_kelas', $id_kelas);
+        $query = $builder->get();
+        return $query->getResult();
+        // return $this->db->table('siswa')->where('id_kelas', $id_kelas)->get()->getResult();
+    }
 }

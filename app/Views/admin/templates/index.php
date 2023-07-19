@@ -62,7 +62,7 @@ use CodeIgniter\I18n\Time;
               </svg>
             </div> -->
             <div class="sidebar-toggler x">
-              <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+              <a href="javascript:void(0)" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ use CodeIgniter\I18n\Time;
       <header>
         <nav class="navbar navbar-expand navbar-light navbar-top">
           <div class="container-fluid">
-            <a href="#" class="burger-btn d-block">
+            <a href="javascript:void(0)" class="burger-btn d-block">
               <i class="bi bi-justify fs-3"></i>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -85,7 +85,7 @@ use CodeIgniter\I18n\Time;
             </button>
             <div class="ms-auto" id="navbarSupportedContent">
               <div class="dropdown">
-                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="javascript:void(0)" data-bs-toggle="dropdown" aria-expanded="false">
                   <div class="user-menu d-flex">
                     <div class="user-name text-end me-3">
                       <h6 class="mb-0 text-gray-600">John Ducky</h6>

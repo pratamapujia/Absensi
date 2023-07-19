@@ -8,7 +8,7 @@
     </li>
 
     <li class="sidebar-item has-sub">
-      <a href="#" class="sidebar-link">
+      <a href="javascript:void(0)" class="sidebar-link">
         <i class="bi bi-menu-button-wide-fill"></i>
         <span>Kelola Menu</span>
       </a>
@@ -26,7 +26,7 @@
     </li>
 
     <li class="sidebar-item has-sub">
-      <a href="#" class="sidebar-link">
+      <a href="javascript:void(0)" class="sidebar-link">
         <i class="bi bi-calendar2-week"></i>
         <span>Kelola Absensi</span>
       </a>
@@ -47,7 +47,7 @@
     </li>
 
     <li class="sidebar-item has-sub">
-      <a href="#" class="sidebar-link">
+      <a href="javascript:void(0)" class="sidebar-link">
         <i class="bi bi-person-fill"></i>
         <span>Kelola Siswa</span>
       </a>
@@ -62,7 +62,7 @@
           <a href="<?= site_url('siswa'); ?>" class="submenu-link">Data Seluruh Siswa</a>
         </li>
         <li class="submenu-item">
-          <a href="" class="submenu-link">Data Siswa per Kelas</a>
+          <a href="<?= site_url('bykelas'); ?>" class="submenu-link">Data Siswa per Kelas</a>
         </li>
         <li class="submenu-item">
           <a href="" class="submenu-link">Data Izin Siswa</a>
@@ -71,7 +71,7 @@
     </li>
 
     <li class="sidebar-item has-sub">
-      <a href="#" class="sidebar-link">
+      <a href="javascript:void(0)" class="sidebar-link">
         <i class="bi bi-people-fill"></i>
         <span>Users</span>
       </a>
