@@ -29,13 +29,17 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
+
 $routes->addRedirect('/', 'admin');
 $routes->get('admin', 'Admin::index');
+
+$routes->get('absensi/settingjam', 'Absensi::settingjam');
 
 $routes->resource('siswa');
 $routes->resource('kelas');
 $routes->resource('jurusan');
 $routes->resource('bykelas');
+$routes->resource('absensi');
 
 /*
  * --------------------------------------------------------------------

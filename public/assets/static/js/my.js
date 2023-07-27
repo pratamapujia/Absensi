@@ -11,10 +11,15 @@ document.addEventListener(
 );
 
 // Menu Active
-var path = location.pathname.split("");
-var url = location.origin + "/" + path[1];
+var path = location.pathname.split("/");
+if (path.length > 1 && path[1] !== "") {
+  var url = location.origin + "/" + path[1];
+} else {
+  var url = location.origin;
+}
+var currentUrl = location.href.split("#")[0];
 $(".sidebar-menu ul li a").each(function () {
-  if ($(this).attr("href").indexOf(url) !== -1) {
+  if ($(this).attr("href").indexOf(url) !== -1 || $(this).attr("href") === currentUrl) {
     $(this).parent().addClass("active").parent().parent("li").addClass("active");
   }
 });
