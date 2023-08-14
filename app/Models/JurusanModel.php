@@ -10,4 +10,9 @@ class JurusanModel extends Model
     protected $primaryKey       = 'id_jurusan';
     protected $returnType       = 'object';
     protected $allowedFields    = ['nama_jurusan'];
+
+    function totalJurusan()
+    {
+        return $this->countAllResults();
+    }
 }

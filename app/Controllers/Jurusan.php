@@ -23,7 +23,7 @@ class Jurusan extends ResourceController
     {
         $data = [
             'title'=> 'Data Jurusan',
-            'jurusan' => $this->jurusan->findAll(),
+            'jurusan' => $this->jurusan->orderBy('nama_jurusan','ASC')->findAll(),
             // 'validation' => \Config\Services::validation(),
         ];
         return view('admin/jurusan/index',$data);

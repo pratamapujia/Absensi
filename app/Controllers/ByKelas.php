@@ -22,7 +22,7 @@ class ByKelas extends ResourceController
      */
     public function index()
     {
-        $kelas = $this->kelas->findAll();
+        $kelas = $this->kelas->orderBy('nama_kelas','ASC')->findAll();
         $jumlahSiswa = [];
         foreach ($kelas as $key => $value) {
             $jumlahSiswa[$value->id_kelas] = $this->kelas->JumlahSiswaPerKelas($value->id_kelas);

@@ -14,11 +14,17 @@ class KelasModel extends Model
     // Dates
     protected $useTimestamps = false;
 
+    function totalKelas()
+    {
+        return $this->countAllResults();
+    }
+
     // Join tabel
     function getAll()
     {
         $builder = $this->db->table('kelas');
         $builder->join('jurusan', 'jurusan.id_jurusan = kelas.id_jurusan');
+        $builder->orderBy('kelas.nama_kelas','ASC');
         $query = $builder->get();
         return $query->getResult();
     }
@@ -41,6 +47,7 @@ class KelasModel extends Model
         $builder->select('*');
         $builder->join('kelas', 'kelas.id_kelas = siswa.id_kelas');
         $builder->where('siswa.id_kelas', $id_kelas);
+        $builder->orderBy('siswa.nama_siswa','ASC');
         $query = $builder->get();
         return $query->getResult();
         // return $this->db->table('siswa')->where('id_kelas', $id_kelas)->get()->getResult();

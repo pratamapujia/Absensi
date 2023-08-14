@@ -18,7 +18,12 @@ class SiswaModel extends Model
         $builder = $this->db->table('siswa');
         $builder->join('kelas', 'kelas.id_kelas = siswa.id_kelas');
         $builder->join('jurusan', 'jurusan.id_jurusan = siswa.id_jurusan');
+        $builder->orderBy('siswa.nama_siswa','ASC');
         $query = $builder->get();
         return $query->getResult();
+    }
+    function totalSiswa()
+    {
+        return $this->countAllResults();
     }
 }
