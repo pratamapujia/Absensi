@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\AbsensiModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Absensi extends ResourceController
@@ -20,6 +21,11 @@ class Absensi extends ResourceController
         '11'    => 'NOVEMBER',
         '12'    => 'DESEMBER',
     ];
+
+    function __construct()
+    {
+        $this->absensi = new AbsensiModel();
+    }
 
     /**
      * Return an array of resource objects, themselves in array format
@@ -93,6 +99,9 @@ class Absensi extends ResourceController
 
     public function settingjam()
     {
-        return view('admin/absensi/settingjam');
+        $data = [
+            'jamAbsen' => $this->absensi->getJamAbsen(),
+        ];
+        return view('admin/absensi/settingjam',$data);
     }
 }

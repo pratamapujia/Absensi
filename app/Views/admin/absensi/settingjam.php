@@ -44,17 +44,19 @@
             </tr>
           </thead>
           <tbody>
-            <!-- </?php foreach ($siswa as $key => $value) : ?> -->
-            <tr>
-              <td>1</td>
-              <td>weekend</td>
-              <td>07:00:00</td>
-              <td>08:00:00</td>
-              <td>
-                <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
-              </td>
-            </tr>
-            <!-- </?php endforeach ?> -->
+            <?php foreach ($jamAbsen as $key => $value) : ?>
+              <tr>
+                <td><?= $key + 1; ?></td>
+                <td>
+                  <span class="badge rounded-pill text-bg-primary fs-6 "><?= $value->type; ?></span>
+                </td>
+                <td><?= $value->mulai_absen; ?></td>
+                <td><?= $value->selesai_absen; ?></td>
+                <td>
+                  <a href="#" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Data"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+              </tr>
+            <?php endforeach ?>
           </tbody>
         </table>
       </div>
