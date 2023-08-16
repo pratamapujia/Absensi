@@ -33,7 +33,9 @@ $routes->set404Override();
 $routes->addRedirect('/', 'admin');
 $routes->get('admin', 'Admin::index');
 
-$routes->get('absensi/settingjam', 'Absensi::settingjam');
+$routes->get('jam', 'Absen::settingjam');
+
+$routes->get('libur', 'Absen::aturlibur');
 
 $routes->resource('siswa');
 $routes->resource('kelas');

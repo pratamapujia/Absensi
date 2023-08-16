@@ -1,6 +1,6 @@
 <?= $this->extend('admin/templates/index'); ?>
 <?= $this->section('title'); ?>
-<title>Setting Jam</title>
+<title><?= $title; ?></title>
 <?= $this->endSection(); ?>
 
 <?= $this->section('main'); ?>
@@ -15,7 +15,7 @@
               <a href="<?= site_url('admin'); ?>">Dashboard</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-              Setting Jam
+              <?= $title; ?>
             </li>
           </ol>
         </nav>
@@ -30,7 +30,7 @@
   <section class="section">
     <div class="card">
       <div class="card-header d-flex align-items-center">
-        <h5 class="card-title">Setting Jam</h5>
+        <h5 class="card-title"><?= $title; ?></h5>
       </div>
       <div class="card-body">
         <table class="table table-striped" id="table1">

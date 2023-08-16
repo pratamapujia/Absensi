@@ -6,15 +6,25 @@ use CodeIgniter\Model;
 
 class AbsensiModel extends Model
 {
-    protected $table            = 'jam_absen';
-    protected $primaryKey       = 'id_jam_absen';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $allowedFields    = ['type','mulai_absen','selesai_absen'];
-
     public function getJamAbsen()
     {
         $builder = $this->db->table('jam_absen');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+    
+    public function getLiburWeekend()
+    {
+        $builder = $this->db->table('libur');
+        $builder->where('type','weekend');
+        $query = $builder->get();
+        return $query->getResult();
+    }
+
+    public function getLiburNasional()
+    {
+        $builder = $this->db->table('libur');
+        $builder->where('type','other');
         $query = $builder->get();
         return $query->getResult();
     }

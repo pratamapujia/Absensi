@@ -32,7 +32,7 @@
       </a>
       <ul class="submenu">
         <li class="submenu-item">
-          <a href="#" class="submenu-link">Atur Libur</a>
+          <a href="<?= site_url('libur'); ?>" class="submenu-link">Atur Libur</a>
         </li>
         <li class="submenu-item">
           <a href="#" class="submenu-link">Data Absensi</a>
@@ -41,7 +41,7 @@
           <a href="#" class="submenu-link">Rekap Absen</a>
         </li>
         <li class="submenu-item">
-          <a href="<?= site_url('absensi/settingjam'); ?>" class="submenu-link">Jam Absen</a>
+          <a href="<?= site_url('jam'); ?>" class="submenu-link">Jam Absen</a>
         </li>
       </ul>
     </li>
