@@ -11,7 +11,7 @@ class SetJam extends Model
     use HasFactory, Notifiable;
 
     protected $table = 'jam_kerja';
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_jam';
     protected $fillable = [
         'kd_jam',
         'nama_jam',

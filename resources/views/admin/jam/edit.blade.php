@@ -15,7 +15,7 @@
           <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
             <ol class="breadcrumb">
               <li class="breadcrumb-item">
-                <a href="{{ route('jam.index') }}">Jam Kerja</a>
+                <a href="{{ route('setjam.index') }}">Jam Kerja</a>
               </li>
               <li class="breadcrumb-item active" aria-current="page">
                 Form Edit Jam Kerja
@@ -35,14 +35,14 @@
             <h5>Jam Kerja</h5>
           </div>
           <div class="ms-auto">
-            <a href="{{ route('jam.index') }}" class="btn icon icon-left btn-primary">
+            <a href="{{ route('setjam.index') }}" class="btn icon icon-left btn-primary">
               <i class="fas fa-arrow-left"></i> Kembali
             </a>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <form action="{{ route('setjam.update', $data->id) }}" class="form" method="POST">
+        <form action="{{ route('setjam.update', $data->id_jam) }}" class="form" method="POST">
           @csrf
           <input type="hidden" name="_method" value="put">
           <div class="row">

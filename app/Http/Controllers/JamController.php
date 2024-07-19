@@ -66,7 +66,7 @@ class JamController extends Controller
         $jamKerja->jam_pulang = $request->jam_pulang;
 
         if ($jamKerja->save()) {
-            return redirect()->route('jam.index')->with('pesan', 'Data berhasil disimpan 👍');
+            return redirect()->route('setjam.index')->with('pesan', 'Data berhasil disimpan 👍');
         } else {
             return redirect()->back()->with('gagal', 'Data gagal Disimpan 😭');
         }
@@ -122,7 +122,7 @@ class JamController extends Controller
         $data->jam_pulang = $request->jam_pulang;
 
         if ($data->update()) {
-            return redirect()->route('jam.index')->with('pesan', 'Data berhasil Diperbarui 👍');
+            return redirect()->route('setjam.index')->with('pesan', 'Data berhasil Diperbarui 👍');
         } else {
             return redirect()->back()->with('gagal', 'Data gagal Diperbarui 😭');
         }
@@ -135,7 +135,7 @@ class JamController extends Controller
     {
         $data = SetJam::find($id);
         if ($data->delete()) {
-            return redirect()->route('jam.index')->with('pesan', 'Data berhasil Dihapus 👍');
+            return redirect()->route('setjam.index')->with('pesan', 'Data berhasil Dihapus 👍');
         } else {
             return redirect()->back()->with('gagal', 'Data gagal Dihapus 😭');
         }

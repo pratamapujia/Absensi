@@ -45,10 +45,10 @@
                 <td>{{ $value->akhir_jam }}</td>
                 <td>{{ $value->jam_pulang }}</td>
                 <td>
-                  <a href="{{ route('setjam.edit', $value->id) }}" class="btn icon icon-left btn-sm btn-warning">
+                  <a href="{{ route('setjam.edit', $value->id_jam) }}" class="btn icon icon-left btn-sm btn-warning">
                     <li class="fas fa-edit"></li> Edit
                   </a>
-                  <form action="{{ route('setjam.destroy', $value->id) }}" method="POST" class="d-inline">
+                  <form action="{{ route('setjam.destroy', $value->id_jam) }}" method="POST" class="d-inline">
                     @csrf
                     <input type="hidden" name="_method" value="delete">
                     <button type="button" class="btn icon icon-left btn-danger btn-sm btn-delete">
