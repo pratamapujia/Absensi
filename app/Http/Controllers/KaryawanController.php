@@ -89,35 +89,10 @@ class KaryawanController extends Controller
         }
 
         if ($karyawan->save()) {
-            // if ($request->hasFile('foto')) {
-            // }
             return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil disimpan 👍');
         } else {
             return redirect()->back()->with('gagal', 'Data gagal Disimpan 😭');
         }
-        // try {
-        //     $data = [
-        //         'nik' => $nik,
-        //         'nama_lengkap' => $nama_lengkap,
-        //         'jabatan' => $jabatan,
-        //         'no_hp' => $no_hp,
-        //         'kd_departemen' => $kd_departemen,
-        //         'foto' => $foto,
-        //         'password' => $password,
-        //     ];
-
-        //     $simpan = DB::table('karyawan')->insert($data);
-        //     if ($simpan) {
-        //         if ($request->hasFile('foto')) {
-        //             $path = "public/uploads/karyawan/";
-        //             $request->file('foto')->storeAs($path, $foto);
-        //         }
-        //         return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil disimpan 👍');
-        //     }
-        // } catch (\Throwable $th) {
-        //     // dd($th);
-        //     return redirect()->back()->with(['gagal' => 'Data gagal disimpan 😭']);
-        // }
     }
 
     /**
@@ -133,7 +108,7 @@ class KaryawanController extends Controller
     public function edit(string $id)
     {
         $dept = DB::table('departemen')->get();
-        $data = DB::table('karyawan')->where('nik', $id)->first();
+        $data = DB::table('karyawan')->where('id_karyawan', $id)->first();
         return view('admin.karyawan.edit', compact('dept', 'data'));
     }
 

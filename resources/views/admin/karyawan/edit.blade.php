@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="card-body">
-        <form action="{{ route('karyawan.update', $data->nik) }}" class="form" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('karyawan.update', $data->id_karyawan) }}" class="form" method="POST" enctype="multipart/form-data">
           @csrf
           <input type="hidden" name="_method" value="put">
           <input type="hidden" name="old_foto" value="{{ $data->foto }}">

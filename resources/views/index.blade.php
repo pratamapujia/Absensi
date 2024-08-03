@@ -37,7 +37,7 @@
         </div>
         <div class="in">
           <h3 class="name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h3>
-          <h5 class="subtext">{{ Auth::guard('karyawan')->user()->jabatan }}</h5>
+          <h5 class="subtext">{{ Auth::guard('karyawan')->user()->jabatan }} | {{ date('H:i') }}</h5>
         </div>
       </div>
     </div>

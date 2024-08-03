@@ -56,10 +56,10 @@
                 <td>{{ $value->no_hp }}</td>
                 <td>{{ $value->nama_departemen }}</td>
                 <td>
-                  <a href="{{ route('karyawan.edit', $value->nik) }}" class="btn icon icon-left btn-sm btn-warning">
+                  <a href="{{ route('karyawan.edit', $value->id_karyawan) }}" class="btn icon icon-left btn-sm btn-warning">
                     <li class="fas fa-edit"></li> Edit
                   </a>
-                  <form action="{{ route('karyawan.destroy', $value->nik) }}" method="POST" class="d-inline">
+                  <form action="{{ route('karyawan.destroy', $value->id_karyawan) }}" method="POST" class="d-inline">
                     @csrf
                     <input type="hidden" name="_method" value="delete">
                     <button type="button" class="btn icon icon-left btn-danger btn-sm btn-delete">
