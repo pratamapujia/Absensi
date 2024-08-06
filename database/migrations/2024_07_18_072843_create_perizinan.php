@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date('tgl_izin');
             $table->char('keterangan', 1)->comment('i:Izin s:Sakit');
             $table->char('laporan', 1)->default(0)->comment('0:Pending 1:Disetujui 2:Ditolak');
+            $table->text('alasan');
             $table->timestamps();
         });
     }

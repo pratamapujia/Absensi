@@ -62,13 +62,13 @@
                 </td>
                 <td>
                   @if ($d->laporan == 0)
-                    <button type="button" class="btn btn-sm btn-primary icon icon-left" data-bs-toggle="modal" data-bs-target="#editModal-{{ $d->id }}">
+                    <button type="button" class="btn btn-sm btn-primary icon icon-left" data-bs-toggle="modal" data-bs-target="#editModal-{{ $d->id_perizinan }}">
                       <i class="bi bi-pencil-square"></i> Edit
                     </button>
                   @else
-                    <form action="/izin/{{ $d->id }}/cancel" method="POST" class="d-inline" id="cancelForm-{{ $d->id }}">
+                    <form action="/izin/{{ $d->id_perizinan }}/cancel" method="POST" class="d-inline" id="cancelForm-{{ $d->id_perizinan }}">
                       @csrf
-                      <button type="button" class="btn btn-sm btn-light icon icon-left cancel-btn text-danger" data-id="{{ $d->id }}">
+                      <button type="button" class="btn btn-sm btn-light icon icon-left cancel-btn text-danger" data-id="{{ $d->id_perizinan }}">
                         <i class="bi bi-trash"></i> Batal
                       </button>
                     </form>
@@ -76,20 +76,20 @@
                 </td>
               </tr>
               <!-- Edit Modal -->
-              <div class="modal fade" id="editModal-{{ $d->id }}" tabindex="-1" aria-labelledby="editModalLabel-{{ $d->id }}" aria-hidden="true">
+              <div class="modal fade" id="editModal-{{ $d->id_perizinan }}" tabindex="-1" aria-labelledby="editModalLabel-{{ $d->id_perizinan }}" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="editModalLabel-{{ $d->id }}">Edit Laporan</h5>
+                      <h5 class="modal-title" id="editModalLabel-{{ $d->id_perizinan }}">Edit Laporan</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="/izin/{{ $d->id }}/update" method="POST">
+                    <form action="/izin/{{ $d->id_perizinan }}/update" method="POST">
                       @csrf
                       {{-- @method('PUT') --}}
                       <div class="modal-body">
                         <div class="form-group">
-                          <label for="laporan-{{ $d->id }}">Laporan</label>
-                          <select class="form-control" id="laporan-{{ $d->id }}" name="laporan">
+                          <label for="laporan-{{ $d->id_perizinan }}">Laporan</label>
+                          <select class="form-control" id="laporan-{{ $d->id_perizinan }}" name="laporan">
                             <option value="0" {{ $d->laporan == 0 ? 'selected' : '' }}>Waiting</option>
                             <option value="1" {{ $d->laporan == 1 ? 'selected' : '' }}>Disetujui</option>
                             <option value="2" {{ $d->laporan == 2 ? 'selected' : '' }}>Ditolak</option>

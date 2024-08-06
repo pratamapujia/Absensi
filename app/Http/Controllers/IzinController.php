@@ -18,7 +18,7 @@ class IzinController extends Controller
     public function update(Request $request, string $id)
     {
         $status = $request->laporan;
-        $update = DB::table('perizinan')->where('id', $id)->update(['laporan' => $status]);
+        $update = DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => $status]);
         if ($update) {
             return redirect()->back()->with('pesan', 'Data berhasil Diperbarui 👍');
         } else {
@@ -28,7 +28,7 @@ class IzinController extends Controller
 
     public function cancel($id)
     {
-        $update = DB::table('perizinan')->where('id', $id)->update(['laporan' => 0]);
+        $update = DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => 0]);
         if ($update) {
             return redirect()->back()->with('pesan', 'Data berhasil Dibatalkan 👍');
         } else {
