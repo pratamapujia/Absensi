@@ -4,7 +4,7 @@
   <title>Monitoring Presensi</title>
   <link rel="stylesheet" href="{{ asset('assets/admin/extensions/simple-datatables/style.css') }}" />
   <link rel="stylesheet" href="{{ asset('assets/admin/compiled/css/table-datatable.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/admin/static/datepicker/css/bootstrap-datepicker3.standalone.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/admin/extensions/flatpickr/flatpickr.min.css') }}">
 @endsection
 
 @section('main')
@@ -52,14 +52,11 @@
 @push('adminScript')
   <script src="{{ asset('assets/admin/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
   <script src="{{ asset('assets/admin/static/js/pages/simple-datatables.js') }}"></script>
-  <script src="{{ asset('assets/admin/static/datepicker/js/bootstrap-datepicker.js') }}"></script>
+  <script src="{{ asset('assets/admin/extensions/flatpickr/flatpickr.min.js') }}"></script>
   <script>
     $(function() {
-      $('#tanggal').datepicker({
-        autoclose: true,
-        todayHighlight: true,
-        format: 'yyyy-mm-dd',
-        orientation: 'bottom auto'
+      flatpickr('#tanggal', {
+        dateFormat: "Y-m-d",
       });
 
       function loadPresensi() {
