@@ -186,4 +186,11 @@ class KaryawanController extends Controller
             return redirect()->route('karyawan.index')->with('gagal', 'Data gagal Dihapus 😭');
         }
     }
+
+    public function setjam($id)
+    {
+        $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
+        $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
+        return view('admin.karyawan.setjam', compact('karyawan','jam'));
+    }
 }

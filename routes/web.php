@@ -11,6 +11,7 @@ use App\Http\Controllers\KonfigurasiController;
 use App\Http\Controllers\PresensiController;
 use Illuminate\Support\Facades\Route;
 
+// Route User Start
 Route::middleware(['guest:karyawan'])->group(function () {
     Route::get('/', function () {
         return view('auth.login');
@@ -39,8 +40,9 @@ Route::middleware(['auth:karyawan'])->group(function () {
     Route::get('/presensi/buatizin', [PresensiController::class, 'buatIzin']);
     Route::post('/presensi/storeizin', [PresensiController::class, 'storeIzin']);
 });
+// Route User End
 
-// Route Admin
+// Route Admin Start
 Route::middleware(['guest:user'])->group(function () {
     Route::get('/panel', function () {
         return view('auth.loginAdmin');
@@ -54,6 +56,7 @@ Route::middleware(['auth:user'])->group(function () {
 
     // Karyawan
     Route::resource('karyawan', KaryawanController::class);
+    Route::get('/karyawan/{nik}/setjam', [KaryawanController::class, 'setjam'])->name('karyawan.setjam');
 
     // Set Jam
     Route::resource('konfigurasi/setjam', JamController::class);
@@ -81,3 +84,4 @@ Route::middleware(['auth:user'])->group(function () {
     Route::post('/izin/{id}/update', [IzinController::class, 'update']);
     Route::post('/izin/{id}/cancel', [IzinController::class, 'cancel']);
 });
+// Route Admin End

@@ -56,14 +56,17 @@
                 <td>{{ $value->no_hp }}</td>
                 <td>{{ $value->nama_departemen }}</td>
                 <td>
-                  <a href="{{ route('karyawan.edit', $value->id_karyawan) }}" class="btn icon icon-left btn-sm btn-warning">
-                    <li class="fas fa-edit"></li> Edit
+                  <a href="{{ route('karyawan.edit', $value->id_karyawan) }}" class="btn icon btn-sm btn-warning" data-bs-toggle="tooltip" title="Edit">
+                    <li class="fas fa-edit"></li>
+                  </a>
+                  <a href="{{ route('karyawan.setjam', $value->id_karyawan) }}" class="btn icon btn-sm btn-info" data-bs-toggle="tooltip" title="Setting Jam">
+                    <li class="fas fa-gear"></li>
                   </a>
                   <form action="{{ route('karyawan.destroy', $value->id_karyawan) }}" method="POST" class="d-inline">
                     @csrf
                     <input type="hidden" name="_method" value="delete">
-                    <button type="button" class="btn icon icon-left btn-danger btn-sm btn-delete">
-                      <li class="fas fa-trash"></li> Hapus
+                    <button type="button" class="btn icon btn-danger btn-sm btn-delete" data-bs-toggle="tooltip" title="Delete">
+                      <li class="fas fa-trash"></li>
                     </button>
                   </form>
                 </td>
