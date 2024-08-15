@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Karyawan;
+use App\Models\SetjamKerja;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -98,9 +99,7 @@ class KaryawanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -191,6 +190,28 @@ class KaryawanController extends Controller
     {
         $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
         $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
-        return view('admin.karyawan.setjam', compact('karyawan','jam'));
+        return view('admin.karyawan.setjam', compact('karyawan', 'jam'));
+    }
+
+    public function storejam(Request $request)
+    {
+        $nik = $request->nik;
+        $hari = $request->hari;
+        $kd_jam = $request->kd_jam;
+
+        for ($i = 0; $i < count($hari); $i++) {
+            $data[] = [
+                'nik' => $nik,
+                'hari' => $hari[$i],
+                'kd_jam' => $kd_jam[$i]
+            ];
+        }
+
+        try {
+            SetjamKerja::insert($data);
+            return redirect()->route('karyawan.index')->with('pesan', 'Berhasil Set Jam Kerja 👍');
+        } catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('gagal', 'Gagal Set Jam Kerja 😭');
+        }
     }
 }

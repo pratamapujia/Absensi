@@ -57,6 +57,7 @@ Route::middleware(['auth:user'])->group(function () {
     // Karyawan
     Route::resource('karyawan', KaryawanController::class);
     Route::get('/karyawan/{nik}/setjam', [KaryawanController::class, 'setjam'])->name('karyawan.setjam');
+    Route::post('/karyawan/storejam', [KaryawanController::class, 'storejam'])->name('karyawan.storejam');
 
     // Set Jam
     Route::resource('konfigurasi/setjam', JamController::class);

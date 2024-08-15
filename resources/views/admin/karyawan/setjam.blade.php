@@ -2,8 +2,6 @@
 
 @section('title')
   <title>Set Jam Kerja Karyawan</title>
-  {{-- <link rel="stylesheet" href="{{ asset('assets/admin/extensions/simple-datatables/style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('assets/admin/compiled/css/table-datatable.css') }}" /> --}}
 @endsection
 
 @section('main')
@@ -53,14 +51,17 @@
         </div>
         <div class="card">
           <div class="card-body">
-            <form class="form form-horizontal">
+            <form action="{{ route('karyawan.storejam') }}" method="post" class="form form-horizontal">
+              @csrf
+              <input type="hidden" name="nik" value="{{ $karyawan->nik }}">
               <div class="form-body">
                 <div class="row">
                   <div class="col-md-4">
                     <label>Senin</label>
+                    <input type="hidden" name="hari[]" value="Senin">
                   </div>
                   <div class="col-md-8 form-group">
-                    <select name="kd_jam" id="kd_jam" class="form-select">
+                    <select name="kd_jam[]" id="kd_jam" class="form-select">
                       <option value="">Pilih Jam</option>
                       @foreach ($jam as $j)
                         <option value="{{ $j->kd_jam }}">{{ $j->nama_jam }}</option>
@@ -69,9 +70,10 @@
                   </div>
                   <div class="col-md-4">
                     <label>Selasa</label>
+                    <input type="hidden" name="hari[]" value="Selasa">
                   </div>
                   <div class="col-md-8 form-group">
-                    <select name="kd_jam" id="kd_jam" class="form-select">
+                    <select name="kd_jam[]" id="kd_jam" class="form-select">
                       <option value="">Pilih Jam</option>
                       @foreach ($jam as $j)
                         <option value="{{ $j->kd_jam }}">{{ $j->nama_jam }}</option>
@@ -80,9 +82,10 @@
                   </div>
                   <div class="col-md-4">
                     <label>Rabu</label>
+                    <input type="hidden" name="hari[]" value="Rabu">
                   </div>
                   <div class="col-md-8 form-group">
-                    <select name="kd_jam" id="kd_jam" class="form-select">
+                    <select name="kd_jam[]" id="kd_jam" class="form-select">
                       <option value="">Pilih Jam</option>
                       @foreach ($jam as $j)
                         <option value="{{ $j->kd_jam }}">{{ $j->nama_jam }}</option>
@@ -91,9 +94,10 @@
                   </div>
                   <div class="col-md-4">
                     <label>Kamis</label>
+                    <input type="hidden" name="hari[]" value="Kamis">
                   </div>
                   <div class="col-md-8 form-group">
-                    <select name="kd_jam" id="kd_jam" class="form-select">
+                    <select name="kd_jam[]" id="kd_jam" class="form-select">
                       <option value="">Pilih Jam</option>
                       @foreach ($jam as $j)
                         <option value="{{ $j->kd_jam }}">{{ $j->nama_jam }}</option>
@@ -102,9 +106,10 @@
                   </div>
                   <div class="col-md-4">
                     <label>Jumat</label>
+                    <input type="hidden" name="hari[]" value="Jumat">
                   </div>
                   <div class="col-md-8 form-group">
-                    <select name="kd_jam" id="kd_jam" class="form-select">
+                    <select name="kd_jam[]" id="kd_jam" class="form-select">
                       <option value="">Pilih Jam</option>
                       @foreach ($jam as $j)
                         <option value="{{ $j->kd_jam }}">{{ $j->nama_jam }}</option>
@@ -161,6 +166,4 @@
 @endsection
 
 @push('adminScript')
-  {{-- <script src="{{ asset('assets/admin/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
-  <script src="{{ asset('assets/admin/static/js/pages/simple-datatables.js') }}"></script> --}}
 @endpush
