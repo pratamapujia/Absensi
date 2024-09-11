@@ -17,22 +17,16 @@ class IzinController extends Controller
 
     public function update(Request $request, string $id)
     {
-        $status = $request->laporan;
-        $update = DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => $status]);
-        if ($update) {
-            return redirect()->back()->with('pesan', 'Data berhasil Diperbarui 👍');
-        } else {
-            return redirect()->back()->with('gagal', 'Data gagal Diperbarui 😭');
-        }
+        $status = $request->input('laporan'); // Validate and sanitize input
+        return DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => $status])
+            ? redirect()->back()->with('pesan', 'Data berhasil Diperbarui 👍')
+            : redirect()->back()->with('gagal', 'Data gagal Diperbarui 😭');
     }
 
-    public function cancel($id)
+    public function cancel(int $id)
     {
-        $update = DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => 0]);
-        if ($update) {
-            return redirect()->back()->with('pesan', 'Data berhasil Dibatalkan 👍');
-        } else {
-            return redirect()->back()->with('gagal', 'Data gagal Dibatalkan 😭');
-        }
+        return DB::table('perizinan')->where('id_perizinan', $id)->update(['laporan' => 0])
+            ? redirect()->back()->with('pesan', 'Data berhasil Dibatalkan 👍')
+            : redirect()->back()->with('gagal', 'Data gagal Dibatalkan 😭');
     }
 }

@@ -18,10 +18,8 @@ class AuthController extends Controller
 
     public function prosesLogout()
     {
-        if (Auth::guard('karyawan')->check()) {
-            Auth::guard('karyawan')->logout();
-            return redirect('/');
-        }
+        Auth::guard('karyawan')->logout();
+        return redirect('/');
     }
 
     // Admin
@@ -38,9 +36,7 @@ class AuthController extends Controller
 
     public function prosesLogoutAdmin()
     {
-        if (Auth::guard('user')->check()) {
-            Auth::guard('user')->logout();
-            return redirect('/panel');
-        }
+        Auth::guard('user')->logout();
+        return redirect('/panel');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Departemen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class DepartemenController extends Controller
@@ -80,6 +81,20 @@ class DepartemenController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $validasi = Validator::make($request->all(), [
+            'kd_departemen' => 'required',
+            'nama_departemen' => 'required|max:100',
+        ], [
+            'kd_departemen.required' => 'Kode Departemen tidak boleh kosong',
+            'nama_departemen.required' => 'Nama Departemen tidak boleh kosong',
+            'nama_departemen.max' => 'Nama Departemen hanya hanya maximal 100 huruf',
+        ]);
+
+        if ($validasi->fails()) {
+            return redirect()->back()->withErrors($validasi)->withInput();
+        }
+
+        // Update the resource
         $dep = Departemen::find($id);
         $dep->kd_departemen = $request->kd_departemen;
         $dep->nama_departemen = $request->nama_departemen;
@@ -96,10 +111,15 @@ class DepartemenController extends Controller
      */
     public function destroy(string $id)
     {
-        $dep = Departemen::find($id);
-        if ($dep->delete()) {
-            return redirect()->route('departemen.index')->with('pesan', 'Data berhasil Dihapus 👍');
-        } else {
+        try {
+            $dep = Departemen::find($id);
+            if ($dep->delete()) {
+                return redirect()->route('departemen.index')->with('pesan', 'Data berhasil Dihapus 👍');
+            } else {
+                return redirect()->route('departemen.index')->with('gagal', 'Data gagal Dihapus 😭');
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return redirect()->route('departemen.index')->with('gagal', 'Data gagal Dihapus 😭');
         }
     }

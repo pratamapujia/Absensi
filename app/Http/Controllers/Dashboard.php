@@ -22,16 +22,16 @@ class Dashboard extends Controller
 
         $historiBulanIni = DB::table('absensi')
             ->where('nik', $nik)
-            ->whereRaw('MONTH(tgl_absen)="' . $bulanIni . '"')
-            ->whereRaw('YEAR(tgl_absen)="' . $tahunIni . '"')
+            ->whereMonth('tgl_absen', $bulanIni)
+            ->whereYear('tgl_absen', $tahunIni)
             ->orderBy('tgl_absen')
             ->get();
 
         $rekapPresensi = DB::table('absensi')
-            ->selectRaw('COUNT(nik) as jmlHadir, SUM(IF(jam_in > "07:00",1,0)) as jmlTerlambat')
+            ->selectRaw('COUNT(nik) as jmlHadir, SUM(CASE WHEN jam_in > "07:00" THEN 1 ELSE 0 END) as jmlTerlambat')
             ->where('nik', $nik)
-            ->whereRaw('MONTH(tgl_absen)="' . $bulanIni . '"')
-            ->whereRaw('YEAR(tgl_absen)="' . $tahunIni . '"')
+            ->whereMonth('tgl_absen', $bulanIni)
+            ->whereYear('tgl_absen', $tahunIni)
             ->first();
 
         $leaderboard = DB::table('absensi')
@@ -43,10 +43,10 @@ class Dashboard extends Controller
         $namaBulan = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
         $rekapIjin = DB::table('perizinan')
-            ->selectRaw('SUM(IF(keterangan="i",1,0)) as izin, SUM(IF(keterangan="s",1,0)) as sakit ')
+            ->selectRaw('SUM(CASE WHEN keterangan="i" THEN 1 ELSE 0 END) as izin, SUM(CASE WHEN keterangan="s" THEN 1 ELSE 0 END) as sakit ')
             ->where('nik', $nik)
-            ->whereRaw('MONTH(tgl_izin)="' . $bulanIni . '"')
-            ->whereRaw('YEAR(tgl_izin)="' . $tahunIni . '"')
+            ->whereMonth('tgl_izin', $bulanIni)
+            ->whereYear('tgl_izin', $tahunIni)
             ->where('laporan', 1)
             ->first();
 

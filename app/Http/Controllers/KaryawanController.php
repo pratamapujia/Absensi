@@ -118,6 +118,7 @@ class KaryawanController extends Controller
     {
         // Validation
         $validasi = Validator::make($request->all(), [
+            'nik' => 'required|numeric|unique:karyawan,nik|digits_between:3,5',
             'nama_lengkap' => 'required|max:30',
             'jabatan' => 'required|max:20',
             'kd_departemen' => 'required',
@@ -178,19 +179,27 @@ class KaryawanController extends Controller
      */
     public function destroy(string $id)
     {
-        $karyawan = Karyawan::find($id);
-        if ($karyawan->delete()) {
-            return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil Dihapus 👍');
-        } else {
+        try {
+            $karyawan = Karyawan::find($id);
+            if ($karyawan->delete()) {
+                return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil Dihapus 👍');
+            } else {
+                return redirect()->route('karyawan.index')->with('gagal', 'Data gagal Dihapus 😭');
+            }
+        } catch (\Exception $e) {
             return redirect()->route('karyawan.index')->with('gagal', 'Data gagal Dihapus 😭');
         }
     }
 
     public function setjam($id)
     {
-        $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
-        $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
-        return view('admin.karyawan.setjam', compact('karyawan', 'jam'));
+        try {
+            $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
+            $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
+            return view('admin.karyawan.setjam', compact('karyawan', 'jam'));
+        } catch (\Exception $e) {
+            return redirect()->route('karyawan.index')->with('gagal', 'Gagal mengambil data karyawan 😭');
+        }
     }
 
     public function storejam(Request $request)

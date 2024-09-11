@@ -24,11 +24,10 @@ class JamController extends Controller
     {
         // Generate kode Jam Baru
         $lastKode = SetJam::orderBy('kd_jam', 'desc')->first();
+        $nextKode = 'JK001'; // Initialize with a default value
         if ($lastKode) {
             $kode = $lastKode->kd_jam;
             $nextKode = 'JK' . str_pad(intval(substr($kode, 2)) + 1, 3, '0', STR_PAD_LEFT);
-        } else {
-            $nextKode = 'JK001';
         }
         return view('admin.jam.create', compact('nextKode'));
     }
