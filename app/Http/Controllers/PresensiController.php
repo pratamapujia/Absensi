@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class PresensiController extends Controller
@@ -27,63 +29,82 @@ class PresensiController extends Controller
         $tgl_absen = date("Y-m-d");
         $jam = date("H:i:s");
         $lok_kantor = DB::table('lokasi')->where('id', 1)->first();
-        $lok = explode(',', $lok_kantor->koordinat);
-        $latitudeKantor = $lok[0];
-        $longitudeKantor = $lok[1];
-        $lokasi = $request->lokasi;
-        $lokasiUser =   explode(",", $lokasi);
-        $latitudeUser = $lokasiUser[0];
-        $longitudeUser = $lokasiUser[1];
+
+        // Extract coordinates
+        list($latitudeKantor, $longitudeKantor) = explode(',', $lok_kantor->koordinat);
+
+        // User location
+        list($latitudeUser, $longitudeUser) = explode(",", $request->lokasi);
+
+        // Calculate distance
         $jarak = $this->distance($latitudeKantor, $longitudeKantor, $latitudeUser, $longitudeUser);
         $radius = round($jarak["meters"]);
-        // dd($radius);
 
-        $cek = DB::table('absensi')->where('tgl_absen', $tgl_absen)->where('nik', $nik)->count();
-        if ($cek > 0) {
-            $ket = "out";
-        } else {
-            $ket  = "in";
-        }
+        // Check attendance
+        $isCheckIn = DB::table('absensi')->where('tgl_absen', $tgl_absen)->where('nik', $nik)->exists();
+        $ket = $isCheckIn ? "out" : "in";
+
+        // Handle image upload
         $image = $request->image;
-        $folderPath = "public/uploads/absensi/";
-        $formatName = $nik . "_" . date('Ymd_Hi') . "_" . $ket;
-        $image_parts = explode(";base64", $image);
-        $image_base64 = base64_decode($image_parts[1]);
-        $fileName = $formatName . ".png";
-        $file = $folderPath . $fileName;
+        $fileName = $this->generateFileName($nik, $ket);
+        $image_base64 = $this->decodeImage($image);
+
+        // Crop image
+        $manager = new ImageManager(Driver::class);
+        $croppedImage = $manager->read($image_base64)->scale(256, 128); // Ganti 300, 300 dengan lebar dan tinggi yang diinginkan
+        $croppedImage->crop(128, 128, 0, 0, 'fff', 'center');
+
+        // Encode image back to base64
+        $image_base64 = (string) $croppedImage->encode();
+
+        $filePath = "public/uploads/absensi/{$fileName}";
+
+        // Check radius
         if ($radius > $lok_kantor->radius) {
-            echo "error|Anda berada di luar radius, jarak anda " . $radius . " meter dari kantor 😭|";
-        } else {
-            if ($cek > 0) {
-                $data_pulang = [
-                    'jam_out' => $jam,
-                    'foto_out' => $fileName,
-                    'lokasi_out' => $lokasi,
-                ];
-                $update = DB::table('absensi')->where('tgl_absen', $tgl_absen)->where('nik', $nik)->update($data_pulang);
-                if ($update) {
-                    echo "success|Absen pulang 😎|out";
-                    Storage::put($file, $image_base64);
-                } else {
-                    echo "error|Absen pulang 😭|out";
-                }
-            } else {
-                $data = [
-                    'nik' => $nik,
-                    'tgl_absen' => $tgl_absen,
-                    'jam_in' => $jam,
-                    'foto_in' => $fileName,
-                    'lokasi_in' => $lokasi,
-                ];
-                $simpan = DB::table('absensi')->insert($data);
-                if ($simpan) {
-                    echo "success|Absen masuk 😎|in";
-                    Storage::put($file, $image_base64);
-                } else {
-                    echo "error|Absen masuk 😭|in";
-                }
-            }
+            return response()->json([
+                'status' => "error|Anda berada di luar radius, jarak anda {$radius} meter dari kantor 😭",
+            ]);
         }
+
+        // Process check-in or check-out
+        if ($isCheckIn) {
+            $data_pulang = [
+                'jam_out' => $jam,
+                'foto_out' => $fileName,
+                'lokasi_out' => $request->lokasi,
+            ];
+            $result = DB::table('absensi')->where('tgl_absen', $tgl_absen)->where('nik', $nik)->update($data_pulang);
+            $message = $result ? "Absen pulang 😎" : "Absen pulang gagal 😭";
+        } else {
+            $data_masuk = [
+                'nik' => $nik,
+                'tgl_absen' => $tgl_absen,
+                'jam_in' => $jam,
+                'foto_in' => $fileName,
+                'lokasi_in' => $request->lokasi,
+            ];
+            $result = DB::table('absensi')->insert($data_masuk);
+            $message = $result ? "Absen masuk 😎" : "Absen masuk gagal 😭";
+        }
+
+        // Save image
+        Storage::put($filePath, $image_base64);
+
+        return response()->json([
+            'status' => $result ? "success|{$message}" : "error|{$message}",
+            'type' => $ket
+        ]);
+    }
+
+    private function generateFileName($nik, $ket)
+    {
+        return "{$nik}_" . date('Ymd_Hi') . "_{$ket}.png";
+    }
+
+    private function decodeImage($image)
+    {
+        $image_parts = explode(";base64,", $image);
+        return base64_decode($image_parts[1]);
     }
 
     //Menghitung Jarak
