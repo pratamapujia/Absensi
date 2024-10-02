@@ -96,7 +96,11 @@
 
     var lokasi = document.getElementById('lokasi');
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback)
+      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      })
     }
 
     function successCallback(position) {
@@ -120,8 +124,8 @@
       }).addTo(map);
     }
 
-    function errorCallback() {
-
+    function errorCallback(error) {
+      console.error("Error getting location: ", error);
     }
 
     $("#takeAbsen").click(function(e) {
@@ -139,34 +143,34 @@
         },
         cache: false,
         success: function(response) {
-            var status = response.status.split('|'); // Split response by '|'
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end', // Adjust position as needed
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                    toast.addEventListener('mouseenter', Swal.stopTimer);
-                    toast.addEventListener('mouseleave', Swal.resumeTimer);
-                }
-            });
-            
-            // Check if the response status is success or error
-            if (status[0] === 'success') {
-                Toast.fire({
-                    icon: 'success',
-                    title: status[1], // Message from the response
-                });
-                setTimeout(() => {
-                    window.location.href = '/dashboard'; // Redirect after showing toast
-                }, 1600);
-            } else {
-                Toast.fire({
-                    icon: 'error',
-                    title: status[1], // Message from the response
-                });
+          var status = response.status.split('|'); // Split response by '|'
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top', // Adjust position as needed
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer);
+              toast.addEventListener('mouseleave', Swal.resumeTimer);
             }
+          });
+
+          // Check if the response status is success or error
+          if (status[0] === 'success') {
+            Toast.fire({
+              icon: 'success',
+              title: status[1], // Message from the response
+            });
+            setTimeout(() => {
+              window.location.href = '/dashboard'; // Redirect after showing toast
+            }, 1600);
+          } else {
+            Toast.fire({
+              icon: 'error',
+              title: status[1], // Message from the response
+            });
+          }
         }
       });
     });

@@ -37,7 +37,7 @@
       </div>
       <div class="in">
         <h3 class="name">{{ Auth::guard('karyawan')->user()->nama_lengkap }}</h3>
-        <h5 class="subtext">{{ Auth::guard('karyawan')->user()->jabatan }} | {{ date('H:i') }}</h5>
+        <h5 class="subtext">{{ Auth::guard('karyawan')->user()->jabatan }} | <span id="current-time"></span></h5>
       </div>
     </div>
   </div>
@@ -46,24 +46,24 @@
     <div class="row">
       <div class="col-6">
         <div class="card bg-success">
-          <div class="card-body comment-block">
-            <div class="item">
-              <div class="avatar">
-                @if ($presensiHariIni != null)
-                @php
-                $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_in);
-                @endphp
-                <img src="{{ url($path) }}" alt="Foto In" class="img-fluid rounded">
-                @else
-                <img src="{{ asset('assets/img/icon/photo.png') }}" class="img-fluid m-1" alt="Camera">
-                @endif
-              </div>
-              <div class="in">
-                <div class="comment-header">
-                  <h5 class="card-title">Masuk</h5>
+          <div class="card-body">
+            <div class="row ">
+              <div class="col-12 col-md-3">
+                <div class="avatar avatar-xl text-center">
+                  @if ($presensiHariIni != null)
+                  @php
+                  $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_in);
+                  @endphp
+                  <img src="{{ url($path) }}" alt="Foto In" width="72px" class="img-fluid rounded">
+                  @else
+                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="img-fluid m-1" width="64px" alt=" Camera">
+                  @endif
                 </div>
-                <div class="card-text">
-                  <span class="badge badge-danger"> {{ $presensiHariIni != null ? $presensiHariIni->jam_in : 'Belum Absen Masuk' }} </span>
+              </div>
+              <div class="col-12 col-md-9">
+                <div class="ms-3 name">
+                  <h2 class="font-bold text-white">Masuk</h2>
+                  <span class="badge badge-danger"> {{ $presensiHariIni != null ? $presensiHariIni->jam_in : 'Belum Absen' }} </span>
                 </div>
               </div>
             </div>
@@ -72,24 +72,24 @@
       </div>
       <div class="col-6">
         <div class="card bg-warning">
-          <div class="card-body comment-block">
-            <div class="item">
-              <div class="avatar">
-                @if ($presensiHariIni != null && $presensiHariIni->jam_out != null)
-                @php
-                $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_out);
-                @endphp
-                <img src="{{ url($path) }}" alt="Foto Out" class="img-fluid rounded">
-                @else
-                <img src="{{ asset('assets/img/icon/photo.png') }}" class="img-fluid m-1" alt="Camera">
-                @endif
-              </div>
-              <div class="in">
-                <div class="comment-header">
-                  <h5 class="card-title">Masuk</h5>
+          <div class="card-body">
+            <div class="row ">
+              <div class="col-12 col-md-3">
+                <div class="avatar avatar-xl text-center">
+                  @if ($presensiHariIni != null && $presensiHariIni->jam_out != null)
+                  @php
+                  $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_out);
+                  @endphp
+                  <img src="{{ url($path) }}" alt="Foto Out" width="72px" class="img-fluid rounded">
+                  @else
+                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="img-fluid m-1" width="64px" alt="Camera">
+                  @endif
                 </div>
-                <div class="card-text">
-                  <span class="badge badge-danger">{{ $presensiHariIni != null && $presensiHariIni->jam_out != null ? $presensiHariIni->jam_out : 'Belum Absen Pulang' }}</span>
+              </div>
+              <div class="col-12 col-md-9">
+                <div class="ms-3 name">
+                  <h2 class="font-bold text-white">Pulang</h2>
+                  <span class="badge badge-danger">{{ $presensiHariIni != null && $presensiHariIni->jam_out != null ? $presensiHariIni->jam_out : 'Belum Absen' }}</span>
                 </div>
               </div>
             </div>
@@ -265,3 +265,20 @@
   </div>
 </div>
 @endsection
+
+@push('myscript')
+<script>
+  function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+    }
+
+    // Update time every second
+    setInterval(updateTime, 1000);
+
+    // Initial call to set the time immediately
+    updateTime();
+</script>
+@endpush
