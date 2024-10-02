@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 use Mockery\Generator\StringManipulation\Pass\Pass;
@@ -51,8 +52,7 @@ class PresensiController extends Controller
 
         // Crop image
         $manager = new ImageManager(Driver::class);
-        $croppedImage = $manager->read($image_base64)->scale(256, 128); // Ganti 300, 300 dengan lebar dan tinggi yang diinginkan
-        $croppedImage->crop(128, 128, 0, 0, 'fff', 'center');
+        $croppedImage = $manager->read($image_base64)->cover(200, 200, 'center');
 
         // Encode image back to base64
         $image_base64 = (string) $croppedImage->encode();
@@ -132,6 +132,25 @@ class PresensiController extends Controller
 
     public function updateProfile(Request $request)
     {
+        $validasi = Validator::make($request->all(), [
+            'nama_lengkap' =>  'required|max:30',
+            'no_hp' => 'required|numeric|digits_between:10,13',
+            'password' =>  'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'nama_lengkap.required' => 'Nama lengkap harus diisi',
+            'nama_lengkap.max' => 'Nama lengkap tidak boleh lebih dari 30 karakter',
+            'no_hp.required' => 'No HP harus diisi',
+            'no_hp.digits_between' => 'No Hp minimal 10 dan maximal 13 angka',
+            'password.required' => 'Password harus diisi',
+            'foto.image' => 'Yang anda masukkan bukan Image',
+            'foto.mimes' => 'Format foto (jpeg, png, jpg)',
+            'foto.max' => 'Ukuran foto maximal 2Mb',
+        ]);
+        if ($validasi->fails()) {
+            return redirect()->back()->withErrors($validasi)->withInput();
+        }
+        
         $nik = Auth::guard('karyawan')->user()->nik;
         $nama_lengkap = $request->nama_lengkap;
         $no_hp = $request->no_hp;

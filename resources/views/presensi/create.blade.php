@@ -87,7 +87,7 @@
 <script>
   Webcam.set({
       height: 400,
-      width: 640,
+      width: 400,
       image_format: 'jpeg',
       jpeg_quality: 80,
 
@@ -96,10 +96,8 @@
 
     var lokasi = document.getElementById('lokasi');
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(successCallback, errorCallback, {
-        enableHighAccuracy: true,
-        timeout: 5000,
-        maximumAge: 0
+      navigator.geolocation.watchPosition(successCallback, errorCallback, {
+        enableHighAccuracy: true
       })
     }
 
