@@ -79,21 +79,29 @@ class KaryawanController extends Controller
         $karyawan->password = Hash::make('password');
 
         if ($request->hasFile('foto')) {
-            $karyawan->foto = $request->nik . "." . $request->file('foto')->getClientOriginalExtension();
-            $path = "public/uploads/karyawan/";
-            // Lakukan cropping
+            $image = $request->file('foto');
+            $fileName = $this->generateFileName($karyawan->nik);
+
+            // Use Intervention Image package for cropping
             $manager = new ImageManager(Driver::class);
-            $croppedImage = $manager->read($request->file('foto'));
-            $croppedImage->cover(300, 300, 'top-center')->save(storage_path('app/' . $path . $karyawan->foto));
-        } else {
-            $karyawan->foto = null;
+            $croppedImage = $manager->read($image)->cover(300, 300, 'top-center'); // Adjust as needed
+
+            // Save the image to storage
+            $croppedImage->save(storage_path("app/public/uploads/karyawan/{$fileName}"));
+
+            $karyawan->foto = $fileName; // Save file name to Karyawan model if needed
         }
 
         if ($karyawan->save()) {
             return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil disimpan 👍');
         } else {
-            return redirect()->back()->with('gagal', 'Data gagal Disimpan 😭');
+            return redirect()->back()->with('gagal', 'Data gagal disimpan 😭');
         }
+    }
+
+    private function generateFileName($nik)
+    {
+        return "{$nik}_" . date('Ymd_Hi') . ".png";
     }
 
     /**
@@ -118,7 +126,6 @@ class KaryawanController extends Controller
     {
         // Validation
         $validasi = Validator::make($request->all(), [
-            'nik' => 'required|numeric|unique:karyawan,nik|digits_between:3,5',
             'nama_lengkap' => 'required|max:30',
             'jabatan' => 'required|max:20',
             'kd_departemen' => 'required',
@@ -164,10 +171,6 @@ class KaryawanController extends Controller
         }
 
         if ($karyawan->update()) {
-            // if ($request->hasFile('foto')) {
-            //     $path = "public/uploads/karyawan/";
-            //     $request->file('foto')->storeAs($path, $karyawan->foto);
-            // }
             return redirect()->route('karyawan.index')->with('pesan', 'Data berhasil Diperbarui 👍');
         } else {
             return redirect()->back()->with('gagal', 'Data gagal Diperbarui 😭');
