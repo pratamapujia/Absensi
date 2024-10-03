@@ -46,7 +46,7 @@
     <div class="row">
       <div class="col-6">
         <div class="card bg-success">
-          <div class="card-body">
+          <div class="card-body py-1">
             <div class="row ">
               <div class="col-12 col-md-3">
                 <div class="avatar avatar-xl text-center">
@@ -54,9 +54,9 @@
                   @php
                   $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_in);
                   @endphp
-                  <img src="{{ url($path) }}" alt="Foto In" width="72px" class="img-fluid rounded">
+                  <img src="{{ url($path) }}" alt="Foto In" class="imaged w64 m-1 rounded">
                   @else
-                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="img-fluid m-1" width="64px" alt=" Camera">
+                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="imaged w64 m-1" alt=" Camera">
                   @endif
                 </div>
               </div>
@@ -72,7 +72,7 @@
       </div>
       <div class="col-6">
         <div class="card bg-warning">
-          <div class="card-body">
+          <div class="card-body py-1">
             <div class="row ">
               <div class="col-12 col-md-3">
                 <div class="avatar avatar-xl text-center">
@@ -80,9 +80,9 @@
                   @php
                   $path = Storage::url('uploads/absensi/' . $presensiHariIni->foto_out);
                   @endphp
-                  <img src="{{ url($path) }}" alt="Foto Out" width="72px" class="img-fluid rounded">
+                  <img src="{{ url($path) }}" alt="Foto Out" class="imaged w64 m-1 rounded">
                   @else
-                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="img-fluid m-1" width="64px" alt="Camera">
+                  <img src="{{ asset('assets/img/icon/camera.svg') }}" class="imaged w64 m-1" alt="Camera">
                   @endif
                 </div>
               </div>

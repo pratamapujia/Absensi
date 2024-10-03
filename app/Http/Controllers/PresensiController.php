@@ -52,7 +52,8 @@ class PresensiController extends Controller
 
         // Crop image
         $manager = new ImageManager(Driver::class);
-        $croppedImage = $manager->read($image_base64)->cover(200, 200, 'center');
+        $croppedImage = $manager->read($image_base64)->scale(256, 128); // Ganti 300, 300 dengan lebar dan tinggi yang diinginkan
+        $croppedImage->crop(128, 128, 0, 0, 'fff', 'center');
 
         // Encode image back to base64
         $image_base64 = (string) $croppedImage->encode();
@@ -150,7 +151,7 @@ class PresensiController extends Controller
         if ($validasi->fails()) {
             return redirect()->back()->withErrors($validasi)->withInput();
         }
-        
+
         $nik = Auth::guard('karyawan')->user()->nik;
         $nama_lengkap = $request->nama_lengkap;
         $no_hp = $request->no_hp;
