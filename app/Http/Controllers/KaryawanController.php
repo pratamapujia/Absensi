@@ -196,26 +196,45 @@ class KaryawanController extends Controller
 
     public function setjam($id)
     {
-        try {
-            $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
-            $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
-            return view('admin.karyawan.setjam', compact('karyawan', 'jam'));
-        } catch (\Exception $e) {
-            return redirect()->route('karyawan.index')->with('gagal', 'Gagal mengambil data karyawan 😭');
+
+        $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
+        $existingJamKerja = SetjamKerja::where('nik', $karyawan->nik)->first();
+        $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
+
+        if ($existingJamKerja) {
+            // Redirect to edit page if work hours exist
+            return redirect()->route('karyawan.editjam', $id);
         }
+
+        // If no work hours exist, continue to setjam view
+        $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
+        return view('admin.karyawan.setjam', compact('karyawan', 'jam'));
     }
 
     public function storejam(Request $request)
     {
+        $messages = [
+            'kd_jam.required' => 'Kode jam harus dipilih untuk setiap hari.',
+            'kd_jam.array' => 'Kode jam harus berupa array.',
+            'kd_jam.*.exists' => 'Pilih kode jam',
+            'kd_jam.*.required' => 'Silakan pilih jam untuk :attribute.',
+        ];
+
+        $request->validate([
+            'kd_jam' => 'required|array',
+            'kd_jam.*' => 'exists:jam_kerja,kd_jam', // Ensure jam exists
+        ], $messages);
+
         $nik = $request->nik;
         $hari = $request->hari;
         $kd_jam = $request->kd_jam;
 
-        for ($i = 0; $i < count($hari); $i++) {
+        $data = [];
+        foreach ($hari as $index => $day) {
             $data[] = [
                 'nik' => $nik,
-                'hari' => $hari[$i],
-                'kd_jam' => $kd_jam[$i]
+                'hari' => $day,
+                'kd_jam' => $kd_jam[$index] ?? null, // Ensure index exists
             ];
         }
 
@@ -225,5 +244,39 @@ class KaryawanController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('karyawan.index')->with('gagal', 'Gagal Set Jam Kerja 😭');
         }
+    }
+
+    public function editjam($id)
+    {
+        $karyawan = DB::table('karyawan')->where('id_karyawan', $id)->first();
+        $jamKerja = SetjamKerja::where('nik', $karyawan->nik)->get();
+        $jam = DB::table('jam_kerja')->orderBy('nama_jam')->get();
+
+        return view('admin.karyawan.editjam', compact('karyawan', 'jam', 'jamKerja'));
+    }
+
+    public function updatejam(Request $request)
+    {
+        $messages = [
+            'kd_jam.required' => 'Kode jam harus dipilih untuk setiap hari.',
+            'kd_jam.array' => 'Kode jam harus berupa array.',
+            'kd_jam.*.exists' => 'Kode jam yang dipilih tidak valid.',
+        ];
+
+        $request->validate([
+            'kd_jam' => 'required|array',
+            'kd_jam.*' => 'required|exists:jam_kerja,kd_jam',
+        ], $messages);
+
+        $nik = $request->nik;
+
+        // Update logic
+        foreach ($request->kd_jam as $index => $kd_jam) {
+            SetjamKerja::where('nik', $nik)
+                ->where('hari', $request->hari[$index])
+                ->update(['kd_jam' => $kd_jam]);
+        }
+
+        return redirect()->route('karyawan.index')->with('pesan', 'Berhasil Update Jam Kerja 👍');
     }
 }

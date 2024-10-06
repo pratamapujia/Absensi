@@ -1,7 +1,7 @@
 @extends('admin.layouts.index')
 
 @section('title')
-<title>Set Jam Kerja Karyawan</title>
+<title>Edit Jam Kerja Karyawan</title>
 @endsection
 
 @section('main')
@@ -9,7 +9,7 @@
   <div class="page-title">
     <div class="row">
       <div class="col-12 col-md-6 order-md-1 order-last">
-        <h3>Set Jam Kerja Karyawan</h3>
+        <h3>Edit Jam Kerja Karyawan</h3>
       </div>
       <div class="col-12 col-md-6 order-md-2 order-first">
         <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -18,7 +18,7 @@
               <a href="{{ route('karyawan.index') }}">Master Karyawan</a>
             </li>
             <li class="breadcrumb-item active" aria-current="page">
-              Set Jam Kerja
+              Edit Jam Kerja
             </li>
           </ol>
         </nav>
@@ -51,33 +51,33 @@
       </div>
       <div class="card">
         <div class="card-body">
-          <form action="{{ route('karyawan.storejam') }}" method="post" class="form form-horizontal">
+          <form action="{{ route('karyawan.updatejam') }}" method="post" class="form form-horizontal">
             @csrf
             <input type="hidden" name="nik" value="{{ $karyawan->nik }}">
             <div class="form-body">
               <div class="row">
-                @foreach (['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'] as $index => $day)
+                @foreach ($jamKerja as $jamItem)
                 <div class="col-md-4">
-                  <label>{{ $day }}</label>
-                  <input type="hidden" name="hari[]" value="{{ $day }}">
+                  <label>{{ $jamItem->hari }}</label>
+                  <input type="hidden" name="hari[]" value="{{ $jamItem->hari }}">
                 </div>
                 <div class="col-md-8 form-group">
-                  <select name="kd_jam[]" id="kd_jam" class="form-select">
+                  <select name="kd_jam[]" class="form-select">
                     <option value="">Pilih Jam</option>
                     @foreach ($jam as $j)
-                    <option value="{{ $j->kd_jam }}" {{ old('kd_jam.' . $index)==$j->kd_jam ? 'selected' : '' }}>
+                    <option value="{{ $j->kd_jam }}" {{ $jamItem->kd_jam == $j->kd_jam ? 'selected' : '' }}>
                       {{ $j->nama_jam }}
                     </option>
                     @endforeach
                   </select>
-                  @error('kd_jam.' . $index)
+                  @error('kd_jam.' . $loop->index)
                   <div class="text-danger">{{ $message }}</div>
                   @enderror
                 </div>
                 @endforeach
 
                 <div class="col-sm-12 d-flex justify-content-end">
-                  <button type="submit" class="btn btn-primary me-1 mb-1">Submit</button>
+                  <button type="submit" class="btn btn-primary me-1 mb-1">Update</button>
                   <button type="reset" class="btn btn-light-secondary me-1 mb-1">Reset</button>
                 </div>
               </div>
